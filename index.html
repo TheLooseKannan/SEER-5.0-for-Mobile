@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SEER 5.0">
+<meta name="theme-color" content="#0057B8">
+<meta name="mobile-web-app-capable" content="yes">
 <title>SEER 5.0 — Real McC.AI™ · Sage IT</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -41,7 +46,11 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;overflow-x:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;overflow-x:hidden;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;}
+/* Smooth momentum scrolling for all scrollable areas on iOS */
+.tabs,.chat-msgs,.alert-col,.chat-sidebar,.seer-col,.deep-intel,.dispatch-sidebar,.asset-col{-webkit-overflow-scrolling:touch;}
+/* Minimum tap target 44px for touch */
+.tab,.sq-btn,.fbtn,.nstep,.btn-primary,.btn-orange,.btn-sec,.act-btn{min-height:44px;}
 .mono{font-family:'JetBrains Mono',monospace;}
 
 /* ═══════════════════════════════
@@ -570,6 +579,248 @@ hr.div{border:none;border-top:1px solid var(--border);margin:12px 0;}
 .tag-y{background:var(--yellow-lt);color:var(--yellow);}
 .tag-p{background:var(--purple-lt);color:var(--purple);}
 .tag-o{background:var(--orange-lt);color:var(--orange);}
+
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE — 768px and below
+   Full single-column restack for phone/tablet
+═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── HEADER ── */
+  .header{
+    padding:0 14px;
+    height:auto;
+    flex-wrap:wrap;
+    gap:8px;
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  .logo-area{gap:10px;}
+  .sageit-logo{height:24px;}
+  .logo-divider{height:20px;}
+  .product-name{font-size:13px;}
+  .product-sub{font-size:9px;}
+  .mcai-pill{
+    font-size:10px;
+    padding:4px 10px;
+    order:3;
+    width:100%;
+    justify-content:center;
+  }
+  .header-right{gap:6px;}
+  .hchip{font-size:10px;padding:4px 8px;}
+
+  /* ── TABS ── */
+  .tabs{
+    padding:0 8px;
+    gap:0;
+  }
+  .tab{
+    padding:10px 10px;
+    font-size:11px;
+    gap:4px;
+    flex-shrink:0;
+  }
+  .tbadge{font-size:8px;padding:1px 4px;}
+
+  /* ── KPI BAR — 2x3 grid on mobile ── */
+  .kpi-bar{
+    grid-template-columns:repeat(2,1fr);
+    border-bottom:1px solid var(--border);
+  }
+  .kpi{
+    padding:10px 12px;
+    border-right:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .kpi:nth-child(2n){border-right:none;}
+  .kpi-icon{width:28px;height:28px;font-size:14px;}
+  .kpi-val{font-size:17px;}
+  .kpi-lbl{font-size:9px;}
+
+  /* ── FLEET LAYOUT — drop sidebar below ── */
+  .fleet-body{
+    grid-template-columns:1fr;
+  }
+  .fleet-main{padding:14px 12px;}
+  .alert-col{
+    border-left:none;
+    border-top:1px solid var(--border);
+    padding:14px 12px;
+  }
+
+  /* ── PREDICTIVE BANNER ── */
+  .pred-banner{padding:12px;}
+  .pred-icon{font-size:18px;}
+  .pred-title{font-size:12px;}
+  .pred-body{font-size:11px;}
+
+  /* ── SITE CARDS — single column ── */
+  .site-grid{grid-template-columns:1fr;}
+  .smets{grid-template-columns:repeat(3,1fr);}
+  .sname{font-size:13px;}
+
+  /* ── NAV FOOTER ── */
+  .nav-foot{
+    padding:10px 12px;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .nav-steps{flex-wrap:wrap;gap:4px;}
+  .nstep{font-size:10px;padding:4px 9px;}
+  .btn-primary,.btn-orange,.btn-sec{
+    font-size:11px;
+    padding:8px 14px;
+  }
+
+  /* ── BREADCRUMB ── */
+  .bc{padding:8px 12px;font-size:11px;}
+
+  /* ── SITE DETAIL — full stack ── */
+  .detail-grid{
+    grid-template-columns:1fr;
+  }
+  .asset-col{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    padding:12px;
+  }
+  /* Collapse asset list to horizontal scroll on mobile */
+  .asset-col .arow{display:inline-flex;margin-right:6px;margin-bottom:0;}
+  .asset-col > div:last-child{
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+  }
+  .chart-col{padding:14px 12px;}
+  .mini-grid{grid-template-columns:repeat(2,1fr);}
+  .seer-col{
+    border-left:none;
+    border-top:1px solid var(--border);
+    padding:14px 12px;
+  }
+
+  /* ── DEEP DIVE ── */
+  .deep-grid{grid-template-columns:1fr;}
+  .deep-main{padding:14px 12px;}
+  .gauge-row{grid-template-columns:repeat(3,1fr);gap:7px;}
+  .gval{font-size:20px;}
+
+  /* Technical justification grid: 2 columns on mobile */
+  .tech-box-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* Sensor table: scrollable horizontally */
+  .chart-box{overflow-x:auto;}
+  .sensor-table{min-width:460px;}
+
+  .deep-intel{
+    border-left:none;
+    border-top:1px solid var(--border);
+    padding:14px 12px;
+  }
+  .rec-impact{grid-template-columns:repeat(2,1fr);}
+
+  /* ── DATA SOURCES ── */
+  .sources-body{padding:14px 12px;}
+  .sources-grid{grid-template-columns:1fr;}
+  .page-title{font-size:15px;}
+  .page-sub{font-size:12px;}
+
+  /* Architecture flow — stack vertically */
+  .arch-flow{flex-direction:column;gap:6px;}
+  .arch-arrow{transform:rotate(90deg);padding:4px 0;}
+
+  /* ── CHAT ── */
+  .chat-layout{grid-template-columns:1fr;}
+  .chat-sidebar{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    padding:12px;
+    /* Collapse context items to horizontal scroll */
+    max-height:180px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  /* Context items inline on mobile */
+  .ctx-item-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
+  .ctx-item{min-width:160px;margin-bottom:0;}
+  /* Hide suggested questions on mobile to save space — user can still type */
+  .sq-section{display:none;}
+  .chat-topbar{padding:10px 14px;flex-wrap:wrap;gap:6px;}
+  .chat-powered{margin-left:0;width:100%;}
+  .chat-msgs{
+    padding:14px 12px;
+    max-height:calc(100vh - 420px);
+  }
+  .bubble{max-width:88%;}
+  .chat-input-row{padding:10px 12px;}
+
+  /* ── DISPATCH ── */
+  .dispatch-layout{grid-template-columns:1fr;}
+  .dispatch-main{padding:14px 12px;}
+  .wo-grid{grid-template-columns:repeat(2,1fr);}
+  /* Parts table: horizontally scrollable */
+  .wo-card{overflow-x:auto;}
+  .parts-table{min-width:480px;}
+  .tech-stats{grid-template-columns:repeat(2,1fr);}
+  .dispatch-sidebar{
+    border-left:none;
+    border-top:1px solid var(--border);
+    padding:14px 12px;
+  }
+  .d-title{font-size:14px;}
+
+  /* ── PRESENTATION GUIDE ── */
+  .guide-body{padding:14px 12px;}
+  .flow-grid{grid-template-columns:1fr;}
+  .tp-row{flex-direction:column;gap:5px;}
+  .tp-scr{width:100%;}
+
+}
+
+/* ── EXTRA SMALL — 480px phones ── */
+@media (max-width: 480px) {
+  .header{padding:8px 10px;}
+  .sageit-logo{height:20px;}
+  .product-name{font-size:12px;}
+  .mcai-pill{font-size:9px;}
+  .hchip{display:none;}
+  /* Show only the alert chip */
+  .hchip.alert{display:flex;}
+
+  .tab{padding:8px 8px;font-size:10px;}
+
+  .kpi-bar{grid-template-columns:repeat(2,1fr);}
+  .kpi-val{font-size:15px;}
+
+  .site-grid{grid-template-columns:1fr;}
+  .smets{grid-template-columns:repeat(3,1fr);}
+
+  .gauge-row{grid-template-columns:repeat(3,1fr);gap:5px;}
+  .gval{font-size:17px;}
+  .glbl{font-size:9px;}
+
+  .tech-box-grid{grid-template-columns:1fr 1fr;}
+
+  .wo-grid{grid-template-columns:1fr 1fr;}
+
+  .flow-grid{grid-template-columns:1fr;}
+
+  .bubble{max-width:92%;font-size:11px;}
+
+  .chat-msgs{max-height:calc(100vh - 460px);}
+
+  /* Tighten padding everywhere on small phones */
+  .fleet-main,.chart-col,.deep-main,.dispatch-main,.sources-body,.guide-body{
+    padding:10px 10px;
+  }
+  .alert-col,.seer-col,.deep-intel,.dispatch-sidebar,.asset-col{
+    padding:10px 10px;
+  }
+}
 </style>
 </head>
 <body>
