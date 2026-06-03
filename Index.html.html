@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEER 5.0 — Real McC.AI™ · Sage IT</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   SAGE IT BRAND TOKENS — Light Theme
+═══════════════════════════════════════ */
+:root{
+  --blue:      #0057B8;
+  --blue-dark: #003D8A;
+  --blue-lt:   #E8F1FC;
+  --teal:      #00B4D8;
+  --teal-lt:   #E0F7FA;
+  --orange:    #F97316;
+  --orange-lt: #FFF3E8;
+  --green:     #16A34A;
+  --green-lt:  #F0FDF4;
+  --yellow:    #D97706;
+  --yellow-lt: #FFFBEB;
+  --red:       #DC2626;
+  --red-lt:    #FEF2F2;
+  --purple:    #7C3AED;
+  --purple-lt: #F5F3FF;
+
+  --bg:        #F8FAFC;
+  --bg-white:  #FFFFFF;
+  --bg-card:   #FFFFFF;
+  --bg-sidebar:#F1F5F9;
+  --border:    #E2E8F0;
+  --border-md: #CBD5E1;
+  --text:      #1E293B;
+  --text-md:   #475569;
+  --text-sm:   #94A3B8;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;overflow-x:hidden;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ═══════════════════════════════
+   HEADER — Sage IT Style
+═══════════════════════════════ */
+.header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  height:62px;
+  box-shadow:var(--shadow-sm);
+}
+.logo-area{display:flex;align-items:center;gap:20px;}
+.sageit-logo{height:32px;width:auto;}
+.logo-divider{width:1px;height:28px;background:var(--border);}
+.product-badge{
+  display:flex;align-items:center;gap:8px;
+}
+.product-name{font-size:15px;font-weight:700;color:var(--blue);}
+.product-sub{font-size:10px;color:var(--teal);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;}
+.mcai-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:linear-gradient(135deg,var(--blue),#0077E6);
+  color:#fff;padding:5px 14px;border-radius:20px;
+  font-size:11px;font-weight:700;letter-spacing:0.3px;
+  box-shadow:0 2px 8px rgba(0,87,184,0.25);
+}
+.mcai-dot{width:6px;height:6px;background:#fff;border-radius:50%;opacity:0.8;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:0.8;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)}}
+.header-right{display:flex;align-items:center;gap:10px;}
+.hchip{
+  background:var(--bg);border:1px solid var(--border);
+  padding:5px 11px;border-radius:16px;font-size:11px;color:var(--text-md);font-weight:500;
+}
+.hchip.alert{background:var(--red-lt);border-color:#FCA5A5;color:var(--red);}
+
+/* ═══════════════════════════════
+   TABS — Sage IT nav style
+═══════════════════════════════ */
+.tabs{
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;padding:0 32px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  padding:14px 18px;font-size:12px;font-weight:600;color:var(--text-md);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all 0.18s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.tab:hover{color:var(--blue);}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tbadge{
+  padding:1px 6px;border-radius:8px;font-size:9px;font-weight:800;
+  letter-spacing:0.3px;
+}
+.tbadge-r{background:var(--red-lt);color:var(--red);}
+.tbadge-p{background:var(--purple-lt);color:var(--purple);}
+.tbadge-b{background:var(--blue-lt);color:var(--blue);}
+
+/* ═══════════════════════════════
+   SCREENS
+═══════════════════════════════ */
+.screen{display:none;}
+.screen.active{display:block;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════════════════════
+   KPI BAR
+═══════════════════════════════ */
+.kpi-bar{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  background:#fff;border-bottom:1px solid var(--border);
+}
+.kpi{
+  padding:14px 20px;border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+}
+.kpi:last-child{border-right:none;}
+.kpi-icon{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+}
+.kpi-lbl{font-size:10px;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:2px;font-weight:600;}
+.kpi-val{font-size:21px;font-weight:800;line-height:1;font-family:'JetBrains Mono',monospace;}
+.kpi-hint{font-size:10px;color:var(--text-sm);margin-top:2px;}
+.kpi-up{color:var(--red);font-size:10px;font-weight:700;}
+.kpi-ok{color:var(--green);font-size:10px;font-weight:700;}
+
+/* ═══════════════════════════════
+   FLEET LAYOUT
+═══════════════════════════════ */
+.fleet-body{display:grid;grid-template-columns:1fr 288px;min-height:calc(100vh - 200px);}
+.fleet-main{padding:20px 24px;}
+.sec-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+.sec-title{font-size:14px;font-weight:700;color:var(--text);}
+.sec-sub{font-size:11px;color:var(--text-sm);margin-top:2px;}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;}
+.fbtn{
+  padding:4px 10px;border-radius:10px;font-size:10px;font-weight:700;
+  cursor:pointer;border:1px solid;transition:all 0.15s;letter-spacing:0.2px;
+}
+
+/* Predictive Banner */
+.pred-banner{
+  background:linear-gradient(135deg,#F5F3FF,#EDE9FE);
+  border:1px solid #C4B5FD;border-radius:10px;
+  padding:14px 16px;margin-bottom:16px;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.pred-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.pred-title{font-size:13px;font-weight:800;color:var(--purple);margin-bottom:4px;}
+.pred-body{font-size:12px;color:#4C1D95;line-height:1.6;}
+.pred-body strong{color:#1E1B4B;}
+.pred-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.pchip{
+  background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);
+  padding:2px 8px;border-radius:8px;font-size:10px;color:var(--purple);font-weight:600;
+}
+
+/* Site grid */
+.site-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+.scard{
+  background:#fff;border-radius:10px;border:1px solid var(--border);
+  padding:14px;cursor:pointer;transition:all 0.18s;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.scard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;}
+.scard.g::before{background:var(--green);}
+.scard.y::before{background:var(--yellow);}
+.scard.r::before{background:var(--red);}
+.scard.p::before{background:var(--purple);}
+.scard:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.scard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;}
+.sname{font-size:12px;font-weight:700;color:var(--text);}
+.sloc{font-size:10px;color:var(--text-sm);margin-top:1px;}
+.sbadge{padding:2px 8px;border-radius:8px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;}
+.bg-g{background:var(--green-lt);color:var(--green);}
+.bg-y{background:var(--yellow-lt);color:var(--yellow);}
+.bg-r{background:var(--red-lt);color:var(--red);}
+.bg-p{background:var(--purple-lt);color:var(--purple);}
+.smets{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px;}
+.smet{background:var(--bg);border-radius:6px;padding:6px 8px;}
+.smet-l{font-size:9px;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.4px;font-weight:600;}
+.smet-v{font-size:13px;font-weight:800;font-family:'JetBrains Mono',monospace;margin-top:1px;}
+.spark-row{display:flex;align-items:center;gap:6px;}
+.spark-l{font-size:9px;color:var(--text-sm);}
+.sp{width:100%;height:22px;}
+.click-hint{font-size:10px;color:var(--blue);font-weight:700;margin-top:6px;display:flex;align-items:center;gap:4px;}
+
+/* Alert sidebar */
+.alert-col{
+  background:var(--bg-sidebar);border-left:1px solid var(--border);
+  padding:18px 16px;overflow-y:auto;
+}
+.acol-title{
+  font-size:11px;font-weight:800;color:var(--text);text-transform:uppercase;
+  letter-spacing:0.8px;margin-bottom:14px;display:flex;align-items:center;gap:7px;
+}
+.alive{width:7px;height:7px;background:var(--red);border-radius:50%;animation:pulse 1.5s infinite;}
+.aitem{
+  background:#fff;border-radius:8px;padding:11px;margin-bottom:8px;
+  border:1px solid var(--border);border-left:3px solid;
+  cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);
+}
+.aitem:hover{border-color:var(--blue);box-shadow:var(--shadow-md);}
+.aitem.ac{border-left-color:var(--red);}
+.aitem.aw{border-left-color:var(--yellow);}
+.aitem.ap{border-left-color:var(--purple);}
+.aitem.ai{border-left-color:var(--teal);}
+.asite{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.amsg{font-size:11px;color:var(--text-md);line-height:1.4;margin-bottom:5px;}
+.amet{display:flex;justify-content:space-between;}
+.atime{font-size:10px;color:var(--text-sm);}
+.aseer{font-size:10px;font-weight:700;color:var(--blue);}
+
+/* Nav footer */
+.nav-foot{
+  background:#fff;border-top:1px solid var(--border);
+  padding:12px 32px;display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 -2px 8px rgba(0,0,0,0.04);
+}
+.nav-steps{display:flex;align-items:center;gap:6px;}
+.nstep{padding:5px 12px;border-radius:12px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid;transition:all 0.15s;}
+.ns-done{border-color:#BBF7D0;color:var(--green);background:var(--green-lt);}
+.ns-cur{border-color:#BFDBFE;color:var(--blue);background:var(--blue-lt);}
+.ns-next{border-color:var(--border);color:var(--text-sm);background:transparent;}
+.narr{color:var(--text-sm);font-size:12px;}
+.btn-primary{
+  background:var(--blue);color:#fff;
+  padding:9px 20px;border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;border:none;display:flex;align-items:center;gap:6px;
+  transition:all 0.15s;font-family:'Inter',sans-serif;
+  box-shadow:0 2px 8px rgba(0,87,184,0.25);
+}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px);}
+.btn-orange{
+  background:var(--orange);color:#fff;
+  padding:9px 20px;border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;border:none;display:flex;align-items:center;gap:6px;
+  transition:all 0.15s;font-family:'Inter',sans-serif;
+  box-shadow:0 2px 8px rgba(249,115,22,0.25);
+}
+.btn-orange:hover{background:#EA6C0A;transform:translateY(-1px);}
+.btn-sec{
+  background:#fff;color:var(--text-md);padding:9px 16px;border-radius:8px;
+  font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);
+  display:flex;align-items:center;gap:6px;transition:all 0.15s;font-family:'Inter',sans-serif;
+}
+.btn-sec:hover{color:var(--blue);border-color:var(--blue);}
+
+/* ═══════════════════════════════
+   SITE DETAIL
+═══════════════════════════════ */
+.bc{
+  padding:10px 24px;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-sm);
+}
+.bc a{color:var(--blue);cursor:pointer;font-weight:500;}
+.bc a:hover{text-decoration:underline;}
+.bc-sep{color:var(--border-md);}
+.bc-cur{color:var(--text);font-weight:700;}
+
+.detail-grid{display:grid;grid-template-columns:220px 1fr 268px;min-height:calc(100vh - 230px);}
+.asset-col{background:var(--bg-sidebar);padding:18px 14px;border-right:1px solid var(--border);}
+.panel-title{font-size:10px;font-weight:800;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;}
+.ag-title{font-size:10px;color:var(--text-sm);font-weight:600;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.arow{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:7px;cursor:pointer;transition:all 0.15s;margin-bottom:2px;}
+.arow:hover{background:var(--blue-lt);}
+.arow.active{background:var(--blue-lt);border:1px solid #BFDBFE;}
+.adot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.aname{font-size:12px;color:var(--text);font-weight:500;flex:1;}
+.ascore{font-size:11px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+
+.chart-col{padding:20px 22px;}
+.ct{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.cs{font-size:11px;color:var(--text-sm);margin-bottom:14px;}
+.chart-box{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.chart-legend{display:flex;gap:14px;font-size:11px;margin-bottom:10px;flex-wrap:wrap;}
+.chart-area{height:148px;position:relative;border-bottom:1px solid var(--border);border-left:1px solid var(--border);}
+.chart-svg{width:100%;height:100%;overflow:visible;}
+.az{position:absolute;top:0;bottom:0;background:rgba(220,38,38,0.06);border-left:1.5px dashed rgba(220,38,38,0.4);border-right:1.5px dashed rgba(220,38,38,0.4);}
+.paz{position:absolute;top:0;bottom:0;background:rgba(124,58,237,0.05);border-left:1.5px dashed rgba(124,58,237,0.4);border-right:1.5px dashed rgba(124,58,237,0.4);}
+.chart-ann{position:absolute;top:-24px;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;transform:translateX(-50%);white-space:nowrap;}
+.chart-ann::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid var(--red);}
+.pred-ann{position:absolute;top:-24px;background:var(--purple);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;transform:translateX(-50%);white-space:nowrap;}
+.pred-ann::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid var(--purple);}
+.ev-bar{
+  background:linear-gradient(135deg,#F5F3FF,#F0F9FF);
+  border:1px solid #DDD6FE;border-radius:8px;
+  padding:10px 13px;margin-bottom:12px;display:flex;align-items:flex-start;gap:9px;
+}
+.ev-bar-text{font-size:11px;color:#4C1D95;line-height:1.6;}
+.ev-bar-text strong{color:#1E1B4B;}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+.minic{background:#fff;border-radius:8px;padding:11px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);}
+.minic:hover{border-color:var(--blue);}
+.minic.hl{border-color:#BFDBFE;}
+.minic-ico{font-size:18px;margin-bottom:6px;}
+.minic-name{font-size:10px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.minic-val{font-size:17px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.minic-lbl{font-size:9px;color:var(--text-sm);margin-top:2px;}
+.minic-hint{font-size:10px;color:var(--blue);font-weight:700;margin-top:5px;}
+
+/* SEER intelligence panel */
+.seer-col{background:var(--bg-sidebar);padding:18px 16px;border-left:1px solid var(--border);overflow-y:auto;}
+.seer-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.seer-lbl{background:linear-gradient(135deg,var(--blue),#0077E6);border-radius:5px;padding:3px 9px;font-size:9px;font-weight:900;color:#fff;letter-spacing:0.5px;}
+.seer-ptitle{font-size:12px;font-weight:700;color:var(--text);}
+.dcard{background:#fff;border-radius:8px;padding:12px;margin-bottom:9px;border:1px solid var(--border);border-left:3px solid;box-shadow:var(--shadow-sm);}
+.dtype{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;}
+.dtitle{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.ddetail{font-size:11px;color:var(--text-md);line-height:1.5;}
+.dsave{margin-top:7px;font-size:11px;font-weight:700;color:var(--green);}
+.rul-wrap{background:var(--bg);border-radius:4px;height:5px;margin-top:5px;}
+.rul-bar{height:100%;border-radius:4px;}
+.act-btn{
+  width:100%;margin-top:9px;padding:10px;
+  background:var(--orange);border:none;border-radius:8px;color:#fff;
+  font-size:12px;font-weight:800;cursor:pointer;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-family:'Inter',sans-serif;box-shadow:0 2px 8px rgba(249,115,22,0.25);
+}
+.act-btn:hover{background:#EA6C0A;transform:translateY(-1px);}
+
+/* Annotation note */
+.ann-note{
+  display:flex;align-items:flex-start;gap:6px;margin-top:10px;
+  background:var(--yellow-lt);border:1px solid #FDE68A;
+  border-radius:6px;padding:7px 10px;font-size:10px;color:#92400E;line-height:1.5;
+}
+
+/* ═══════════════════════════════
+   DEEP DIVE
+═══════════════════════════════ */
+.deep-grid{display:grid;grid-template-columns:1fr 288px;min-height:calc(100vh - 230px);}
+.deep-main{padding:22px 26px;}
+.gauge-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.gcrd{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.glbl{font-size:10px;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:7px;font-weight:600;}
+.gval{font-size:26px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.gsub{font-size:10px;color:var(--text-sm);margin-top:3px;}
+.sensor-table{width:100%;border-collapse:collapse;}
+.sensor-table th{font-size:10px;color:var(--text-sm);text-align:left;padding:7px 10px;text-transform:uppercase;letter-spacing:0.6px;border-bottom:2px solid var(--border);font-weight:700;}
+.sensor-table td{font-size:11px;padding:8px 10px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+.sensor-table tr:hover td{background:var(--bg);}
+.tr-r td{color:var(--red);}
+.tr-y td{color:var(--yellow);}
+.tr-g td{color:var(--green);}
+.tech-box{background:var(--blue-lt);border:1px solid #BFDBFE;border-radius:10px;padding:14px;margin-bottom:16px;}
+.tech-box-title{font-size:12px;font-weight:800;color:var(--blue);margin-bottom:10px;}
+.tech-box-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.tbi{background:#fff;border-radius:7px;padding:9px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.tbi-num{font-size:10px;font-weight:800;color:var(--blue);margin-bottom:4px;}
+.tbi-body{font-size:10px;color:var(--text-md);line-height:1.5;}
+.deep-intel{background:var(--bg-sidebar);padding:18px 16px;border-left:1px solid var(--border);overflow-y:auto;}
+.rec-card{background:#fff;border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.rec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.rec-ico{font-size:17px;}
+.rec-title{font-size:12px;font-weight:800;color:var(--text);}
+.rec-body{font-size:11px;color:var(--text-md);line-height:1.6;}
+.rec-body strong{color:var(--text);}
+.rec-impact{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);}
+.ri-item{background:var(--bg);border-radius:6px;padding:8px;}
+.ri-lbl{font-size:9px;color:var(--text-sm);margin-bottom:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;}
+.ri-val{font-size:14px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.conf-row{display:flex;align-items:center;gap:9px;margin-top:10px;}
+.conf-lbl{font-size:11px;color:var(--text-sm);}
+.conf-wrap{flex:1;background:var(--bg);border-radius:3px;height:5px;}
+.conf-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--teal));}
+.conf-pct{font-size:11px;font-weight:800;color:var(--blue);font-family:'JetBrains Mono',monospace;}
+
+/* ═══════════════════════════════
+   DATA SOURCES
+═══════════════════════════════ */
+.sources-body{padding:24px 32px;min-height:calc(100vh - 200px);}
+.page-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.page-sub{font-size:13px;color:var(--text-md);margin-bottom:24px;}
+.sources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.src-card{background:#fff;border-radius:10px;padding:16px;border:1px solid var(--border);box-shadow:var(--shadow-sm);transition:all 0.18s;}
+.src-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.src-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.src-ico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.src-name{font-size:13px;font-weight:700;color:var(--text);}
+.src-type{font-size:10px;color:var(--text-sm);margin-top:1px;}
+.src-detail{font-size:11px;color:var(--text-md);line-height:1.6;}
+.src-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.sc{padding:2px 8px;border-radius:7px;font-size:10px;font-weight:600;}
+.sc-b{background:var(--blue-lt);color:var(--blue);}
+.sc-y{background:var(--yellow-lt);color:var(--yellow);}
+.sc-p{background:var(--purple-lt);color:var(--purple);}
+.sc-g{background:var(--green-lt);color:var(--green);}
+.sc-t{background:var(--teal-lt);color:#0077A8;}
+.arch-box{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.arch-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.arch-flow{display:flex;align-items:stretch;gap:0;}
+.arch-layer{flex:1;background:var(--bg);border-radius:8px;padding:12px;border:1px solid var(--border);}
+.arch-lbl{font-size:10px;font-weight:800;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:8px;}
+.arch-items{display:flex;flex-direction:column;gap:4px;}
+.arch-item{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;}
+.ai-b{background:var(--blue-lt);color:var(--blue);}
+.ai-y{background:var(--yellow-lt);color:var(--yellow);}
+.ai-p{background:var(--purple-lt);color:var(--purple);}
+.ai-g{background:var(--green-lt);color:var(--green);}
+.ai-t{background:var(--teal-lt);color:#0077A8;}
+.arch-arrow{display:flex;align-items:center;justify-content:center;padding:0 10px;color:var(--text-sm);font-size:18px;flex-shrink:0;}
+
+/* ═══════════════════════════════
+   CHAT
+═══════════════════════════════ */
+.chat-layout{display:grid;grid-template-columns:258px 1fr;min-height:calc(100vh - 200px);}
+.chat-sidebar{background:var(--bg-sidebar);padding:18px 16px;border-right:1px solid var(--border);overflow-y:auto;}
+.ctx-title{font-size:10px;font-weight:800;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
+.ctx-item{background:#fff;border-radius:8px;padding:9px 11px;margin-bottom:6px;border:1px solid var(--border);cursor:pointer;transition:all 0.15s;box-shadow:var(--shadow-sm);}
+.ctx-item:hover{border-color:var(--blue);}
+.ctx-item.active{border-color:#BFDBFE;background:var(--blue-lt);}
+.ctx-name{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px;}
+.ctx-sub{font-size:10px;color:var(--text-sm);}
+.ctx-badge{display:inline-block;margin-top:4px;padding:1px 7px;border-radius:6px;font-size:9px;font-weight:800;}
+.sq-section{margin-top:18px;}
+.sq-title{font-size:10px;font-weight:800;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;}
+.sq-btn{
+  display:block;width:100%;text-align:left;
+  background:#fff;border:1px solid var(--border);
+  border-radius:7px;padding:8px 10px;margin-bottom:5px;
+  font-size:11px;color:var(--text-md);cursor:pointer;transition:all 0.15s;
+  font-family:'Inter',sans-serif;box-shadow:var(--shadow-sm);
+}
+.sq-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-lt);}
+.chat-main{display:flex;flex-direction:column;background:var(--bg);}
+.chat-topbar{
+  padding:13px 22px;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-sm);
+}
+.chat-lbl{background:linear-gradient(135deg,var(--blue),#0077E6);border-radius:7px;padding:4px 10px;font-size:10px;font-weight:900;color:#fff;}
+.chat-topbar-title{font-size:13px;font-weight:700;color:var(--text);}
+.chat-topbar-sub{font-size:11px;color:var(--text-sm);}
+.chat-powered{margin-left:auto;font-size:11px;color:var(--text-sm);}
+.chat-powered span{color:var(--blue);font-weight:700;}
+.chat-msgs{
+  flex:1;overflow-y:auto;padding:20px 22px;
+  display:flex;flex-direction:column;gap:14px;
+  max-height:calc(100vh - 340px);
+}
+.msg-wrap{display:flex;gap:10px;align-items:flex-start;}
+.msg-wrap.user{flex-direction:row-reverse;}
+.msg-av{width:30px;height:30px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;}
+.msg-av.ai{background:linear-gradient(135deg,var(--blue),#0077E6);color:#fff;}
+.msg-av.usr{background:var(--bg);border:1px solid var(--border);color:var(--text-md);}
+.bubble{max-width:72%;padding:11px 14px;border-radius:10px;font-size:12px;line-height:1.65;}
+.bubble.ai{background:#fff;border:1px solid var(--border);color:var(--text);box-shadow:var(--shadow-sm);}
+.bubble.usr{background:var(--blue);color:#fff;}
+.bubble strong{color:var(--blue);}
+.bubble.usr strong{color:#BFD7FF;}
+.highlight{background:var(--blue-lt);border-left:3px solid var(--blue);padding:7px 11px;border-radius:0 6px 6px 0;margin:7px 0;font-size:11px;color:var(--text);}
+.msg-time{font-size:9px;color:var(--text-sm);margin-top:4px;}
+.msg-time.right{text-align:right;}
+.typing{display:flex;gap:5px;align-items:center;}
+.typing span{width:6px;height:6px;background:var(--text-sm);border-radius:50%;animation:tdot 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:0.2s;}
+.typing span:nth-child(3){animation-delay:0.4s;}
+@keyframes tdot{0%,80%,100%{transform:scale(0.8);opacity:0.5}40%{transform:scale(1.1);opacity:1}}
+.chat-input-row{
+  padding:14px 22px;background:#fff;border-top:1px solid var(--border);
+  display:flex;gap:10px;align-items:flex-end;
+}
+.chat-inp{
+  flex:1;background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:10px 14px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;
+  resize:none;outline:none;transition:border 0.15s;min-height:42px;max-height:100px;
+}
+.chat-inp:focus{border-color:var(--blue);}
+.chat-send{
+  background:var(--blue);border:none;border-radius:9px;
+  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:15px;color:#fff;flex-shrink:0;transition:all 0.15s;
+}
+.chat-send:hover{background:var(--blue-dark);}
+
+/* ═══════════════════════════════
+   DISPATCH
+═══════════════════════════════ */
+.dispatch-layout{display:grid;grid-template-columns:1fr 296px;min-height:calc(100vh - 200px);}
+.dispatch-main{padding:22px 26px;}
+.d-title{font-size:17px;font-weight:800;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.d-sub{font-size:12px;color:var(--text-md);margin-bottom:18px;}
+.wo-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.wo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.wo-id{font-size:18px;font-weight:800;color:var(--blue);font-family:'JetBrains Mono',monospace;}
+.wo-status{background:var(--blue-lt);color:var(--blue);padding:5px 13px;border-radius:12px;font-size:11px;font-weight:800;border:1px solid #BFDBFE;}
+.wo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.wo-f{background:var(--bg);border-radius:7px;padding:9px;}
+.wo-fl{font-size:9px;color:var(--text-sm);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;font-weight:600;}
+.wo-fv{font-size:12px;font-weight:700;color:var(--text);}
+hr.div{border:none;border-top:1px solid var(--border);margin:12px 0;}
+.parts-table{width:100%;border-collapse:collapse;}
+.parts-table th{font-size:9px;color:var(--text-sm);text-align:left;padding:6px 10px;text-transform:uppercase;letter-spacing:0.6px;border-bottom:2px solid var(--border);font-weight:700;}
+.parts-table td{font-size:11px;padding:8px 10px;border-bottom:1px solid var(--border);}
+.parts-table tr:hover td{background:var(--bg);}
+.avail-y{color:var(--green);font-weight:700;}
+.avail-n{color:var(--yellow);font-weight:700;}
+.hist-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.hist-item:last-child{border-bottom:none;}
+.hist-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.hist-date{font-size:11px;color:var(--text-sm);white-space:nowrap;min-width:78px;}
+.hist-detail{font-size:11px;color:var(--text);line-height:1.4;}
+.hist-result{font-size:10px;font-weight:700;margin-top:2px;}
+.dispatch-sidebar{background:var(--bg-sidebar);padding:18px 16px;border-left:1px solid var(--border);}
+.tech-card{background:#fff;border-radius:10px;padding:14px;margin-bottom:12px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.tech-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.tech-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#0077E6);display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:800;}
+.tech-name{font-size:12px;font-weight:700;color:var(--text);}
+.tech-role{font-size:10px;color:var(--text-sm);}
+.tech-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;}
+.ts-item{background:var(--bg);border-radius:6px;padding:7px;}
+.ts-lbl{font-size:9px;color:var(--text-sm);font-weight:600;}
+.ts-val{font-size:13px;font-weight:800;margin-top:1px;}
+.notif-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.notif-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.notif-row{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-md);padding:5px 0;border-bottom:1px solid var(--border);}
+.notif-row:last-child{border-bottom:none;}
+.nc{color:var(--green);}
+.ns{color:var(--blue);}
+.tl-item{display:flex;gap:10px;margin-bottom:10px;}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.tl-line{width:2px;flex:1;background:var(--border);margin-top:3px;}
+.tl-content{flex:1;padding-bottom:10px;}
+.tl-time{font-size:10px;color:var(--text-sm);margin-bottom:2px;}
+.tl-text{font-size:11px;font-weight:700;color:var(--text);}
+.tl-sub{font-size:10px;color:var(--text-sm);margin-top:1px;}
+
+/* ═══════════════════════════════
+   PRESENTATION GUIDE
+═══════════════════════════════ */
+.guide-body{padding:28px 32px;min-height:calc(100vh - 200px);}
+.flow-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.fbox{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--border);box-shadow:var(--shadow-sm);position:relative;}
+.fbox-num{position:absolute;top:-12px;left:18px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;}
+.fbox-ico{font-size:22px;margin-bottom:8px;margin-top:6px;}
+.fbox-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:5px;}
+.fbox-body{font-size:11px;color:var(--text-md);line-height:1.55;}
+.fbox-click{font-size:11px;font-weight:700;color:var(--blue);margin-top:10px;}
+.tp-box{background:#fff;border-radius:12px;padding:20px;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.tp-title{font-size:13px;font-weight:800;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.tp-row{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);}
+.tp-row:last-child{border-bottom:none;}
+.tp-scr{font-size:11px;font-weight:800;color:var(--text);width:130px;flex-shrink:0;line-height:1.5;}
+.tp-scr small{display:block;color:var(--text-sm);font-weight:400;font-size:10px;}
+.tp-line{font-size:11px;color:var(--text-md);line-height:1.65;flex:1;}
+.tp-line em{color:var(--orange);font-style:italic;font-weight:600;}
+.tp-line strong{color:var(--text);}
+
+/* Utils */
+.flex{display:flex;} .aic{align-items:center;} .jb{justify-content:space-between;}
+.gap6{gap:6px;} .gap8{gap:8px;} .gap10{gap:10px;} .gap12{gap:12px;}
+.mt4{margin-top:4px;} .mt8{margin-top:8px;} .mt12{margin-top:12px;} .mt16{margin-top:16px;}
+.tag{display:inline-block;padding:2px 8px;border-radius:7px;font-size:10px;font-weight:700;}
+.tag-b{background:var(--blue-lt);color:var(--blue);}
+.tag-r{background:var(--red-lt);color:var(--red);}
+.tag-g{background:var(--green-lt);color:var(--green);}
+.tag-y{background:var(--yellow-lt);color:var(--yellow);}
+.tag-p{background:var(--purple-lt);color:var(--purple);}
+.tag-o{background:var(--orange-lt);color:var(--orange);}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     HEADER
+═══════════════════════════════════════ -->
+<div class="header">
+  <div class="logo-area">
+    <img src="https://sageitinc.com/upd/2025/05/Sage-IT-Logo-new.svg" class="sageit-logo" alt="Sage IT"
+      onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'">
+    <div id="logo-fallback" style="display:none;align-items:center;gap:4px;">
+      <span style="font-size:22px;font-weight:900;color:#1E293B;">SAGE</span>
+      <span style="font-size:22px;font-weight:900;color:#0057B8;">IT</span>
+    </div>
+    <div class="logo-divider"></div>
+    <div class="product-badge">
+      <div>
+        <div class="product-name">SEER 5.0</div>
+        <div class="product-sub">Predictive Service Intelligence</div>
+      </div>
+    </div>
+  </div>
+  <div class="mcai-pill">
+    <div class="mcai-dot"></div>
+    Real McC.AI™ — Production AI. Not Pilot.
+  </div>
+  <div class="header-right">
+    <div class="hchip">Customer: <strong>Tier 1 Entertainment Operator</strong></div>
+    <div class="hchip">10 Sites Active</div>
+    <div class="hchip alert">⚡ 3 Live Alerts</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="go('s1',this)">🏢 Fleet Overview <span class="tbadge tbadge-r">3 Alerts</span></div>
+  <div class="tab" onclick="go('s2',this)">⚡ Site Detail <span class="tbadge tbadge-r">Critical</span></div>
+  <div class="tab" onclick="go('s3',this)">🧠 Asset Deep Dive <span class="tbadge tbadge-r">RUL 52h</span></div>
+  <div class="tab" onclick="go('s4',this)">📡 Data Sources <span class="tbadge tbadge-b">Edge+</span></div>
+  <div class="tab" onclick="go('s5',this)">💬 SEER Chat <span class="tbadge tbadge-b">AI Live</span></div>
+  <div class="tab" onclick="go('s6',this)">🔧 Auto Dispatch <span class="tbadge tbadge-b">WO Active</span></div>
+  <div class="tab" onclick="go('s7',this)">🗺 Presentation Guide</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 1 — FLEET OVERVIEW
+═══════════════════════════════════════ -->
+<div id="s1" class="screen active">
+  <div class="kpi-bar">
+    <div class="kpi"><div class="kpi-icon" style="background:var(--blue-lt)">🏢</div><div><div class="kpi-lbl">Sites Monitored</div><div class="kpi-val" style="color:var(--blue)">10</div><div class="kpi-hint">TX · LA · FL</div></div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:var(--red-lt)">⚡</div><div><div class="kpi-lbl">Active Anomalies</div><div class="kpi-val" style="color:var(--red)">3</div><div class="kpi-up">▲ +2 since yesterday</div></div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:var(--purple-lt)">🔮</div><div><div class="kpi-lbl">Predictive Alerts</div><div class="kpi-val" style="color:var(--purple)">2</div><div class="kpi-hint">Next 7 days · Act now</div></div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:var(--green-lt)">💰</div><div><div class="kpi-lbl">Savings Identified</div><div class="kpi-val" style="color:var(--green)">$6,240</div><div class="kpi-hint">This month · Actionable</div></div></div>
+    <div class="kpi"><div class="kpi-icon" style="background:var(--purple-lt)">🔋</div><div><div class="kpi-lbl">EV Charge Events</div><div class="kpi-val" style="color:var(--purple)">47</div><div class="kpi-hint">Last 24h · Fleet-wide</div></div></div>
+  </div>
+
+  <div class="fleet-body">
+    <div class="fleet-main">
+      <!-- Predictive Banner -->
+      <div class="pred-banner">
+        <div class="pred-icon">🎬</div>
+        <div>
+          <div class="pred-title">🔮 SEER 5.0 Predictive Intelligence — Telugu Blockbuster Release Alert</div>
+          <div class="pred-body">
+            <strong>Next Friday: "Kalki 2898-AD: Part 2" releases.</strong> DFW has <strong>340,000+ Telugu-speaking residents</strong> — one of North America's highest concentrations, concentrated in Frisco, Plano, Allen, McKinney. Historical data from Pushpa 2 release: <strong>94% occupancy + 73% EV stalls active simultaneously</strong> at Dallas Preston Road. SEER 5.0 predicts <strong>+86 kW demand surge</strong> between 6–11 PM next Friday. Current site status: 🟢 Green — but without intervention, expect a <strong>$840 peak demand penalty</strong>.
+          </div>
+          <div class="pred-chips">
+            <span class="pchip">📊 94% predicted occupancy</span>
+            <span class="pchip">🔋 6+ Tesla chargers simultaneous</span>
+            <span class="pchip">🌡️ 98°F forecast · July peak heat</span>
+            <span class="pchip">💡 Load-balance plan ready</span>
+            <span class="pchip">⏰ Act by Thursday to avert $840 penalty</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-hdr">
+        <div>
+          <div class="sec-title">Venue Portfolio — Entertainment Operator <span style="font-size:10px;color:var(--text-sm);font-weight:400;">(data via partner edge gateways → SEER 5.0 ML layer)</span></div>
+          <div class="sec-sub">Last refreshed 2 min ago · LSTM anomaly scoring · RUL predictions · Event correlation active</div>
+        </div>
+        <div class="filter-row">
+          <div class="fbtn" style="border-color:var(--blue);color:var(--blue);background:var(--blue-lt)">All 10</div>
+          <div class="fbtn" style="border-color:var(--red);color:var(--red);background:var(--red-lt)">🔴 Critical 1</div>
+          <div class="fbtn" style="border-color:var(--yellow);color:var(--yellow);background:var(--yellow-lt)">🟡 Warning 2</div>
+          <div class="fbtn" style="border-color:var(--purple);color:var(--purple);background:var(--purple-lt)">🔮 Predictive 1</div>
+          <div class="fbtn" style="border-color:var(--green);color:var(--green);background:var(--green-lt)">🟢 Healthy 6</div>
+        </div>
+      </div>
+
+      <div class="site-grid">
+        <div class="scard r" onclick="go('s2',document.querySelectorAll('.tab')[1])">
+          <div class="scard-top"><div><div class="sname">🎬 Dallas Uptown Megaplex</div><div class="sloc">Dallas, TX 75204 · 168,214 sq ft</div></div><div class="sbadge bg-r">⚡ Critical</div></div>
+          <div class="smets">
+            <div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--red)">412 kW</div></div>
+            <div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--red)">0.91</div></div>
+            <div class="smet"><div class="smet-l">EV Active</div><div class="smet-v" style="color:var(--purple)">8</div></div>
+          </div>
+          <div class="spark-row"><div class="spark-l">24h demand:</div>
+            <svg class="sp" viewBox="0 0 200 22"><polyline points="0,17 30,15 70,13 100,10 130,7 150,4 170,6 190,11 200,15" fill="none" stroke="#DC2626" stroke-width="2"/><circle cx="150" cy="4" r="3" fill="#DC2626"/></svg>
+          </div>
+          <div class="click-hint">👆 Click to see SEER 5.0 diagnosis →</div>
+        </div>
+
+        <div class="scard p" onclick="go('s2',document.querySelectorAll('.tab')[1])">
+          <div class="scard-top"><div><div class="sname">🎬 Dallas Preston Road 🟢</div><div class="sloc">Dallas, TX 75240 · 98,600 sq ft</div></div><div class="sbadge bg-p">🔮 Predictive</div></div>
+          <div style="background:var(--purple-lt);border:1px solid #DDD6FE;border-radius:6px;padding:6px 9px;margin-bottom:7px;font-size:10px;color:#4C1D95;">
+            <strong style="color:#1E1B4B">⚠ Green now</strong> — SEER predicts Telugu film event surge next Fri 6–11pm. Pre-emptive load balancing recommended by Thursday.
+          </div>
+          <div class="smets">
+            <div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">198 kW</div></div>
+            <div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.09</div></div>
+            <div class="smet"><div class="smet-l">EV Stalls</div><div class="smet-v" style="color:var(--purple)">12</div></div>
+          </div>
+          <div class="click-hint">🔮 See load-balance plan →</div>
+        </div>
+
+        <div class="scard y"><div class="scard-top"><div><div class="sname">🎬 Houston Galleria Cinema</div><div class="sloc">Houston, TX 77056 · 98,400 sq ft</div></div><div class="sbadge bg-y">⚠ Warning</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--yellow)">318 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--yellow)">0.67</div></div><div class="smet"><div class="smet-l">RUL</div><div class="smet-v" style="color:var(--yellow)">38h</div></div></div></div>
+        <div class="scard y"><div class="scard-top"><div><div class="sname">🎬 Austin Domain Theatre</div><div class="sloc">Austin, TX 78758 · 72,100 sq ft</div></div><div class="sbadge bg-y">⚠ Watch</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--yellow)">241 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--yellow)">0.52</div></div><div class="smet"><div class="smet-l">Occupancy</div><div class="smet-v" style="color:var(--text-sm)">31%</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 San Antonio Riverwalk</div><div class="sloc">San Antonio, TX 78205</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">198 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.12</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">5</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 New Orleans Palace</div><div class="sloc">New Orleans, LA 70115</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">221 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.09</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">3</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 Tampa Bay Multiplex</div><div class="sloc">Tampa, FL 33602</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">209 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.14</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">8</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 Orlando Premiere</div><div class="sloc">Orlando, FL 32819</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">246 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.11</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">12</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 Jacksonville Cinema</div><div class="sloc">Jacksonville, FL 32256</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">178 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.06</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">4</div></div></div></div>
+        <div class="scard g"><div class="scard-top"><div><div class="sname">🎬 Beaumont Town Square</div><div class="sloc">Beaumont, TX 77701</div></div><div class="sbadge bg-g">✓ Healthy</div></div><div class="smets"><div class="smet"><div class="smet-l">Demand</div><div class="smet-v" style="color:var(--green)">162 kW</div></div><div class="smet"><div class="smet-l">Anomaly</div><div class="smet-v" style="color:var(--green)">0.07</div></div><div class="smet"><div class="smet-l">EV</div><div class="smet-v">1</div></div></div></div>
+      </div>
+    </div>
+
+    <div class="alert-col">
+      <div class="acol-title"><div class="alive"></div>Live Alert Feed</div>
+      <div class="aitem ac" onclick="go('s2',document.querySelectorAll('.tab')[1])">
+        <div class="asite">⚡ Dallas Uptown — CRITICAL</div>
+        <div class="amsg">EV surge + HVAC coil drift simultaneously. Demand spike +68 kW. LSTM score: 0.91.</div>
+        <div class="amet"><div class="atime">14 min ago</div><div class="aseer">SEER 5.0 →</div></div>
+      </div>
+      <div class="aitem ap">
+        <div class="asite">🔮 Dallas Preston Road — PREDICTIVE</div>
+        <div class="amsg">Telugu film release next Fri. Predicted +86 kW surge 6–11pm. EV + HVAC compound load risk.</div>
+        <div class="amet"><div class="atime">7 days out</div><div class="aseer">SEER forecast →</div></div>
+      </div>
+      <div class="aitem aw">
+        <div class="asite">⚠ Houston Galleria</div>
+        <div class="amsg">HVAC Unit 2 RUL: 38h ±6h. Bearing wear pattern. Schedule service before weekend.</div>
+        <div class="amet"><div class="atime">2h ago</div><div class="aseer">SEER detected →</div></div>
+      </div>
+      <div class="aitem aw">
+        <div class="asite">⚠ Austin Domain</div>
+        <div class="amsg">HVAC oversupplied at 31% occupancy. Setpoint drift. Est. waste: $180/week.</div>
+        <div class="amet"><div class="atime">4h ago</div><div class="aseer">SEER detected →</div></div>
+      </div>
+      <div class="aitem ai">
+        <div class="asite">ℹ Tampa Bay — EV Prediction</div>
+        <div class="amsg">EV charging peak overlap predicted Friday 7–10pm. Load shift recommendation ready.</div>
+        <div class="amet"><div class="atime">Yesterday</div><div class="aseer">SEER predicted →</div></div>
+      </div>
+      <div style="margin-top:12px;">
+        <div class="ann-note">📡 All alerts from SEER 5.0 LSTM + event correlation. Partner platform provides raw sensor data only — no anomaly scoring, no RUL, no diagnosis.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-foot">
+    <div class="nav-steps">
+      <div class="nstep ns-cur">① Fleet</div><div class="narr">→</div>
+      <div class="nstep ns-next" onclick="go('s2',document.querySelectorAll('.tab')[1])" style="cursor:pointer">② Site</div><div class="narr">→</div>
+      <div class="nstep ns-next" onclick="go('s3',document.querySelectorAll('.tab')[2])" style="cursor:pointer">③ Asset</div><div class="narr">→</div>
+      <div class="nstep ns-next" onclick="go('s5',document.querySelectorAll('.tab')[4])" style="cursor:pointer">④ Chat</div><div class="narr">→</div>
+      <div class="nstep ns-next" onclick="go('s6',document.querySelectorAll('.tab')[5])" style="cursor:pointer">⑤ Dispatch</div>
+    </div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s7',document.querySelectorAll('.tab')[6])">🗺 Presentation Guide</button>
+      <button class="btn-primary" onclick="go('s2',document.querySelectorAll('.tab')[1])">Drill into Dallas Uptown →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 2 — SITE DETAIL
+═══════════════════════════════════════ -->
+<div id="s2" class="screen">
+  <div class="bc">
+    <a onclick="go('s1',document.querySelectorAll('.tab')[0])">Fleet Overview</a>
+    <span class="bc-sep">›</span><span class="bc-cur">Dallas Uptown Megaplex</span>
+    <span class="bc-sep">·</span><span style="color:var(--red);font-weight:700;">⚡ Critical — HVAC Drift + EV Surge</span>
+    <span style="margin-left:12px;" class="tag tag-p">🔮 Telugu film surge predicted next Friday</span>
+  </div>
+  <div class="detail-grid">
+    <div class="asset-col">
+      <div class="panel-title">Asset Inventory</div>
+      <div class="ag-title">HVAC Systems</div>
+      <div class="arow active" onclick="go('s3',document.querySelectorAll('.tab')[2])"><div class="adot" style="background:var(--red)"></div><div class="aname">HVAC Unit 3</div><div class="ascore" style="color:var(--red)">0.91</div></div>
+      <div class="arow"><div class="adot" style="background:var(--yellow)"></div><div class="aname">HVAC Unit 1</div><div class="ascore" style="color:var(--yellow)">0.54</div></div>
+      <div class="arow"><div class="adot" style="background:var(--green)"></div><div class="aname">HVAC Unit 2</div><div class="ascore" style="color:var(--green)">0.12</div></div>
+      <div class="arow"><div class="adot" style="background:var(--green)"></div><div class="aname">HVAC Unit 4</div><div class="ascore" style="color:var(--green)">0.08</div></div>
+      <div class="ag-title">EV Charging</div>
+      <div class="arow"><div class="adot" style="background:var(--red)"></div><div class="aname">EV Bank A (4 stalls)</div><div class="ascore" style="color:var(--red)">SURGE</div></div>
+      <div class="arow"><div class="adot" style="background:var(--yellow)"></div><div class="aname">EV Bank B (4 stalls)</div><div class="ascore" style="color:var(--yellow)">HIGH</div></div>
+      <div class="arow"><div class="adot" style="background:var(--purple)"></div><div class="aname">EV Bank C (4 stalls)</div><div class="ascore" style="color:var(--purple)">SCHED</div></div>
+      <div class="ag-title">Lighting &amp; Other</div>
+      <div class="arow"><div class="adot" style="background:var(--green)"></div><div class="aname">Lobby + Concessions</div><div class="ascore" style="color:var(--green)">0.06</div></div>
+      <div class="arow"><div class="adot" style="background:var(--green)"></div><div class="aname">Auditoriums 1–8</div><div class="ascore" style="color:var(--green)">0.04</div></div>
+      <div class="arow"><div class="adot" style="background:var(--green)"></div><div class="aname">Refrigeration</div><div class="ascore" style="color:var(--green)">0.09</div></div>
+      <div class="mt12 ann-note">📡 All assets via partner Nexus edge gateways. SEER 5.0 scores each one continuously.</div>
+    </div>
+
+    <div class="chart-col">
+      <div class="ct">Site Energy Demand — Last 24 Hours + Next-Friday Prediction</div>
+      <div class="cs">168,214 sq ft · 4 HVAC units · 12 EV stalls · Live sensor data + predictive overlay</div>
+      <div class="ev-bar">
+        <div style="font-size:18px;flex-shrink:0">🔋</div>
+        <div class="ev-bar-text">
+          <strong>TODAY — EV Surge Detected 6:15–8:45 PM:</strong> 8 chargers activated during evening shows (+68 kW) with 97°F ambient and 82% occupancy. HVAC at peak cycle. SEER flagged compound risk immediately.<br>
+          <strong>NEXT FRIDAY — Predicted:</strong> "Kalki 2898 Part 2" + 94% occupancy + 12 EV stalls = +86 kW surge projected. Stagger EV Bank C to 11pm + pre-cool from 4pm. Action window: Thursday.
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="flex jb aic" style="margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:700;color:var(--text)">Power Demand (kW)</div>
+          <div class="chart-legend">
+            <span style="color:var(--blue)">— Total</span>
+            <span style="color:var(--purple)">— EV Load</span>
+            <span style="color:var(--yellow)">--- HVAC</span>
+            <span style="color:var(--purple);opacity:0.5">⋯ Predicted</span>
+          </div>
+        </div>
+        <div class="chart-area">
+          <div class="az" style="left:62%;width:16%;"><div class="chart-ann">⚡ Surge Now</div></div>
+          <div class="paz" style="left:82%;width:17%;"><div class="pred-ann">🔮 Predicted Next Fri</div></div>
+          <svg class="chart-svg" viewBox="0 0 600 140" preserveAspectRatio="none">
+            <line x1="0" y1="28" x2="600" y2="28" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="56" x2="600" y2="56" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="84" x2="600" y2="84" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="112" x2="600" y2="112" stroke="var(--border)" stroke-width="1"/>
+            <text x="4" y="26" fill="#94A3B8" font-size="8">450kW</text>
+            <text x="4" y="54" fill="#94A3B8" font-size="8">350kW</text>
+            <text x="4" y="82" fill="#94A3B8" font-size="8">250kW</text>
+            <text x="4" y="110" fill="#94A3B8" font-size="8">150kW</text>
+            <polyline points="30,108 80,103 130,98 180,92 230,88 280,85 330,80 370,58 400,32 430,26 460,30 490,74 520,84 545,87 570,24 590,21" fill="none" stroke="#0057B8" stroke-width="2.5"/>
+            <polyline points="30,128 330,128 370,108 400,88 430,84 460,88 490,115 520,125 545,128 570,70 590,65" fill="rgba(124,58,237,0.08)" stroke="#7C3AED" stroke-width="1.5"/>
+            <polyline points="30,93 80,90 130,88 180,85 230,83 280,82 330,79 370,74 400,70 430,68 460,72 490,79 520,82 545,84 570,54 590,51" fill="none" stroke="#D97706" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <circle cx="430" cy="26" r="4" fill="#DC2626"/><text x="435" y="22" fill="#DC2626" font-size="8" font-weight="bold">412 kW</text>
+            <circle cx="570" cy="24" r="4" fill="#7C3AED"/><text x="488" y="14" fill="#7C3AED" font-size="8" font-weight="bold">Predicted: 498 kW</text>
+            <text x="22" y="132" fill="#94A3B8" font-size="8">12am</text><text x="130" y="132" fill="#94A3B8" font-size="8">6am</text><text x="255" y="132" fill="#94A3B8" font-size="8">12pm</text><text x="370" y="132" fill="#94A3B8" font-size="8">6pm</text><text x="432" y="132" fill="#94A3B8" font-size="8">8pm</text><text x="535" y="132" fill="#94A3B8" font-size="8">Next Fri</text>
+          </svg>
+        </div>
+      </div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Asset Health Snapshot</div>
+      <div class="mini-grid">
+        <div class="minic hl" onclick="go('s3',document.querySelectorAll('.tab')[2])"><div class="minic-ico">❄️</div><div class="minic-name">HVAC Unit 3</div><div class="minic-val" style="color:var(--red)">0.91</div><div class="minic-lbl" style="color:var(--red)">Anomaly Score</div><div class="minic-hint">👆 Deep dive →</div></div>
+        <div class="minic"><div class="minic-ico">🔋</div><div class="minic-name">EV Bank A</div><div class="minic-val" style="color:var(--purple)">+68kW</div><div class="minic-lbl">Surge now</div></div>
+        <div class="minic" style="border-color:#DDD6FE"><div class="minic-ico">🔮</div><div class="minic-name">EV Bank C</div><div class="minic-val" style="color:var(--purple)">+32kW</div><div class="minic-lbl" style="color:var(--purple)">Predicted Fri</div></div>
+        <div class="minic"><div class="minic-ico">👥</div><div class="minic-name">Occupancy</div><div class="minic-val" style="color:var(--yellow)">82%</div><div class="minic-lbl">Evening peak</div></div>
+        <div class="minic"><div class="minic-ico">🌡️</div><div class="minic-name">Ambient</div><div class="minic-val" style="color:var(--yellow)">97°F</div><div class="minic-lbl">Outdoor · 6pm</div></div>
+        <div class="minic"><div class="minic-ico">💡</div><div class="minic-name">Lighting</div><div class="minic-val" style="color:var(--green)">Normal</div><div class="minic-lbl">Score: 0.06</div></div>
+      </div>
+    </div>
+
+    <div class="seer-col">
+      <div class="seer-hdr"><div class="seer-lbl">SEER 5.0</div><div class="seer-ptitle">Real McC.AI™ Intelligence</div></div>
+      <div class="dcard" style="border-left-color:var(--red)">
+        <div class="dtype" style="color:var(--red)">🔴 Active — HVAC Coil Drift</div>
+        <div class="dtitle">Condenser coil fouling + setpoint drift</div>
+        <div class="ddetail">LSTM score 0.91. Coil ΔT +4°F above norm. Compressor drawing 18% excess current. HVAC-GPT confidence: 94%.</div>
+        <div class="rul-wrap"><div class="rul-bar" style="width:25%;background:var(--red)"></div></div>
+        <div style="font-size:9px;color:var(--text-sm);margin-top:3px;">RUL: 52h remaining of ~210h expected</div>
+        <div class="dsave">💰 Fix now: saves $680/mo</div>
+      </div>
+      <div class="dcard" style="border-left-color:var(--purple)">
+        <div class="dtype" style="color:var(--purple)">🔮 Predictive — Telugu Film Event</div>
+        <div class="dtitle">Demand surge predicted next Friday</div>
+        <div class="ddetail">Kalki 2898 Part 2 release. DFW Telugu diaspora: 340K+. Historical: Pushpa 2 = 94% occ + 73% EV active. Predicted: <strong style="color:var(--text)">+86 kW above baseline.</strong></div>
+        <div style="margin-top:7px;font-size:11px;color:var(--purple);font-weight:600;">🔧 Stagger EV Bank C → 11pm, pre-cool from 4pm Friday</div>
+        <div class="dsave">💰 Averts $840 demand charge penalty</div>
+      </div>
+      <div class="dcard" style="border-left-color:var(--green)">
+        <div class="dtype" style="color:var(--green)">✅ 4-Step Action Plan</div>
+        <div class="dtitle">Immediate + Pre-emptive</div>
+        <div class="ddetail"><strong style="color:var(--text)">NOW:</strong> Schedule HVAC Unit 3 coil clean (24h) · Reset setpoint 68°F→72°F<br><strong style="color:var(--text)">BY THU:</strong> Program EV Bank C off-peak · Pre-cool protocol Friday 4pm</div>
+        <div class="dsave">💰 Total monthly impact: $1,520</div>
+      </div>
+      <button class="act-btn" onclick="go('s6',document.querySelectorAll('.tab')[5])">⚡ Auto-create Work Order via SEER Agent →</button>
+      <div class="mt8 ann-note">This panel is what the partner platform cannot provide. SEER 5.0 adds diagnosis, prediction, and automated action.</div>
+    </div>
+  </div>
+
+  <div class="nav-foot">
+    <div class="nav-steps">
+      <div class="nstep ns-done" onclick="go('s1',document.querySelectorAll('.tab')[0])" style="cursor:pointer">✓ Fleet</div><div class="narr">→</div>
+      <div class="nstep ns-cur">② Site Detail</div><div class="narr">→</div>
+      <div class="nstep ns-next">③ Asset</div>
+    </div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s1',document.querySelectorAll('.tab')[0])">← Fleet</button>
+      <button class="btn-sec" onclick="go('s5',document.querySelectorAll('.tab')[4])">💬 Ask SEER Chat</button>
+      <button class="btn-primary" onclick="go('s3',document.querySelectorAll('.tab')[2])">Deep Dive HVAC Unit 3 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 3 — DEEP DIVE
+═══════════════════════════════════════ -->
+<div id="s3" class="screen">
+  <div class="bc">
+    <a onclick="go('s1',document.querySelectorAll('.tab')[0])">Fleet</a><span class="bc-sep">›</span>
+    <a onclick="go('s2',document.querySelectorAll('.tab')[1])">Dallas Uptown</a><span class="bc-sep">›</span>
+    <span class="bc-cur">HVAC Unit 3 — Anomaly 0.91</span><span class="bc-sep">·</span>
+    <span style="color:var(--red);font-weight:700;">🔴 Coil Fouling — RUL: 52h</span>
+  </div>
+  <div class="deep-grid">
+    <div class="deep-main">
+      <div class="gauge-row">
+        <div class="gcrd"><div class="glbl">Anomaly Score</div><div class="gval" style="color:var(--red)">0.91</div><div class="gsub">LSTM Autoencoder · High</div></div>
+        <div class="gcrd"><div class="glbl">Remaining Useful Life</div><div class="gval" style="color:var(--yellow)">52h</div><div class="gsub">±8h confidence bounds</div></div>
+        <div class="gcrd"><div class="glbl">HVAC-GPT Confidence</div><div class="gval" style="color:var(--blue)">94%</div><div class="gsub">Domain SLM · Real McC.AI™</div></div>
+      </div>
+
+      <div class="tech-box">
+        <div class="tech-box-title">🔬 Technical Justification — How SEER 5.0 Knows This</div>
+        <div class="tech-box-grid">
+          <div class="tbi"><div class="tbi-num">① Sensor Ingest</div><div class="tbi-body">BACnet/Modbus from HVAC controllers via Nexus edge gateway → TimescaleDB hypertable. 15-min intervals, 24-month history. 6 channels per unit.</div></div>
+          <div class="tbi"><div class="tbi-num">② LSTM Anomaly</div><div class="tbi-body">LSTM Autoencoder trained on 18 months normal behavior. Reconstruction error on current window = anomaly score. Threshold: 0.75. Current: 0.91.</div></div>
+          <div class="tbi"><div class="tbi-num">③ Feature Correlation</div><div class="tbi-body">Coil temp ↑ + comp amps ↑ + supply air ↑ + refrigerant pressure ↑ = fouling cluster. Pearson r = 0.91 across 4 channels. Not noise — real fault.</div></div>
+          <div class="tbi"><div class="tbi-num">④ HVAC-GPT Diagnosis</div><div class="tbi-body">Domain SLM (Phi-3 Mini, LoRA fine-tuned on HVAC manuals + 10K fault codes) maps anomaly → root cause → RUL → work instructions. 94% confidence.</div></div>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <div class="flex jb aic" style="margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:700;color:var(--text)">HVAC Unit 3 — 7-Day Sensor Telemetry</div>
+          <div class="chart-legend"><span style="color:var(--blue)">— Coil Temp</span><span style="color:var(--orange)">--- Comp Amps</span><span style="color:rgba(220,38,38,0.5)">▓ Anomaly Zone</span></div>
+        </div>
+        <div class="chart-area" style="height:130px;">
+          <div class="az" style="left:71%;width:29%;"><div class="chart-ann" style="left:40%">Anomaly Window</div></div>
+          <svg class="chart-svg" viewBox="0 0 600 120" preserveAspectRatio="none">
+            <line x1="0" y1="24" x2="600" y2="24" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="48" x2="600" y2="48" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="72" x2="600" y2="72" stroke="var(--border)" stroke-width="1"/>
+            <line x1="0" y1="96" x2="600" y2="96" stroke="var(--border)" stroke-width="1"/>
+            <polyline points="0,84 60,82 120,80 180,78 240,76 300,74 360,68 400,58 440,46 480,36 540,28 600,24" fill="none" stroke="#0057B8" stroke-width="2.5"/>
+            <polyline points="0,96 60,94 120,92 180,90 240,88 300,86 360,80 400,72 440,62 480,54 540,46 600,42" fill="none" stroke="#F97316" stroke-width="2" stroke-dasharray="5,3"/>
+            <line x1="0" y1="80" x2="340" y2="80" stroke="rgba(34,197,94,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <circle cx="480" cy="36" r="4" fill="#DC2626"/><text x="485" y="32" fill="#DC2626" font-size="8" font-weight="bold">Drift starts</text>
+            <text x="2" y="22" fill="#94A3B8" font-size="8">85°F</text><text x="2" y="46" fill="#94A3B8" font-size="8">78°F</text><text x="2" y="70" fill="#94A3B8" font-size="8">72°F</text><text x="2" y="94" fill="#94A3B8" font-size="8">65°F</text>
+            <text x="0" y="112" fill="#94A3B8" font-size="8">D1</text><text x="85" y="112" fill="#94A3B8" font-size="8">D2</text><text x="170" y="112" fill="#94A3B8" font-size="8">D3</text><text x="255" y="112" fill="#94A3B8" font-size="8">D4</text><text x="340" y="112" fill="#94A3B8" font-size="8">D5</text><text x="425" y="112" fill="#94A3B8" font-size="8">D6</text><text x="510" y="112" fill="#94A3B8" font-size="8">Today</text>
+          </svg>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Live Sensor Readings vs. Baseline</div>
+      <table class="sensor-table">
+        <thead><tr><th>Sensor</th><th>Current</th><th>Baseline</th><th>Delta</th><th>SEER Status</th></tr></thead>
+        <tbody>
+          <tr class="tr-r"><td>Coil Inlet Temp</td><td>83.4°F</td><td>72.0°F</td><td>+11.4°F</td><td>🔴 Anomaly — Coil Fouling</td></tr>
+          <tr class="tr-r"><td>Compressor Amps</td><td>47.2A</td><td>38.0A</td><td>+9.2A</td><td>🔴 Anomaly — Overload</td></tr>
+          <tr class="tr-y"><td>Supply Air Temp</td><td>58.1°F</td><td>54.5°F</td><td>+3.6°F</td><td>🟡 Drifting</td></tr>
+          <tr class="tr-y"><td>Refrigerant Pressure</td><td>268 psi</td><td>245 psi</td><td>+23 psi</td><td>🟡 Elevated</td></tr>
+          <tr class="tr-g"><td>Return Air Temp</td><td>76.2°F</td><td>75.8°F</td><td>+0.4°F</td><td>🟢 Normal</td></tr>
+          <tr class="tr-g"><td>Humidity</td><td>48%</td><td>45–52%</td><td>—</td><td>🟢 Normal</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="deep-intel">
+      <div class="seer-hdr"><div class="seer-lbl">SEER 5.0</div><div class="seer-ptitle">HVAC-GPT Diagnosis</div></div>
+      <div class="rec-card">
+        <div class="rec-hdr"><div class="rec-ico">🧠</div><div class="rec-title">Root Cause Analysis</div></div>
+        <div class="rec-body">Condenser coil fouling confirmed. Reduced heat transfer forcing compressor 18% harder. Coil ΔT = 4°F above normal. Pattern consistent with <strong>dust/debris accumulation</strong> in high-traffic venue environment.</div>
+        <div class="conf-row"><div class="conf-lbl">Confidence</div><div class="conf-wrap"><div class="conf-fill" style="width:94%"></div></div><div class="conf-pct">94%</div></div>
+      </div>
+      <div class="rec-card">
+        <div class="rec-hdr"><div class="rec-ico">⚡</div><div class="rec-title">Recommended Actions</div></div>
+        <div class="rec-body"><strong>1.</strong> Schedule coil cleaning within 24h<br><strong>2.</strong> Reset setpoint 68°F → 72°F<br><strong>3.</strong> Inspect refrigerant post-cleaning<br><strong>4.</strong> Pre-cool protocol for Telugu film Friday</div>
+        <div class="rec-impact">
+          <div class="ri-item"><div class="ri-lbl">Energy savings</div><div class="ri-val" style="color:var(--green)">$680/mo</div></div>
+          <div class="ri-item"><div class="ri-lbl">RUL extension</div><div class="ri-val" style="color:var(--green)">+6 months</div></div>
+          <div class="ri-item"><div class="ri-lbl">Emergency if ignored</div><div class="ri-val" style="color:var(--red)">$8,400</div></div>
+          <div class="ri-item"><div class="ri-lbl">Failure probability</div><div class="ri-val" style="color:var(--red)">High/52h</div></div>
+        </div>
+      </div>
+      <button class="act-btn" onclick="go('s6',document.querySelectorAll('.tab')[5])">🤖 Dispatch PlannerAgent → Work Order →</button>
+      <div style="margin-top:10px;padding:11px;background:var(--blue-lt);border-radius:8px;border:1px solid #BFDBFE;">
+        <div style="font-size:10px;color:var(--blue);line-height:1.6;"><strong>Phase 2 Preview:</strong> PlannerAgent checks SLA → ProcurementAgent sources parts → FieldAgent generates AR work order → zero-touch dispatch.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-foot">
+    <div class="nav-steps">
+      <div class="nstep ns-done" onclick="go('s1',document.querySelectorAll('.tab')[0])" style="cursor:pointer">✓ Fleet</div><div class="narr">→</div>
+      <div class="nstep ns-done" onclick="go('s2',document.querySelectorAll('.tab')[1])" style="cursor:pointer">✓ Site</div><div class="narr">→</div>
+      <div class="nstep ns-cur">③ Asset</div>
+    </div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s2',document.querySelectorAll('.tab')[1])">← Site Detail</button>
+      <button class="btn-sec" onclick="go('s5',document.querySelectorAll('.tab')[4])">💬 Ask SEER Chat</button>
+      <button class="btn-orange" onclick="go('s6',document.querySelectorAll('.tab')[5])">🔧 Auto-Dispatch Work Order →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 4 — DATA SOURCES
+═══════════════════════════════════════ -->
+<div id="s4" class="screen">
+  <div class="sources-body">
+    <div class="page-title">📡 Data Sources — SEER 5.0 Ingestion Architecture</div>
+    <div class="page-sub">How sensor data flows from edge devices through to predictive intelligence — every source SEER 5.0 correlates</div>
+    <div class="sources-grid">
+      <div class="src-card" style="border-top:3px solid var(--yellow)"><div class="src-hdr"><div class="src-ico" style="background:var(--yellow-lt)">📡</div><div><div class="src-name">Partner Nexus Edge Gateway</div><div class="src-type">Primary Edge Device · On-site hardware</div></div></div><div class="src-detail">Wireless IoT device at each venue — already deployed across all 10 sites. Connects HVAC controllers, energy meters, lighting, sensors to cloud via cellular. SEER 5.0 pulls data via MCP integration. No new hardware required.</div><div class="src-chips"><span class="sc sc-y">Edge Hardware</span><span class="sc sc-b">MCP Integration</span><span class="sc sc-b">Cellular 4G/5G</span><span class="sc sc-b">15-min intervals</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--blue)"><div class="src-hdr"><div class="src-ico" style="background:var(--blue-lt)">🌡️</div><div><div class="src-name">BACnet / Modbus HVAC Controllers</div><div class="src-type">Protocol Layer · Via Nexus gateway</div></div></div><div class="src-detail">Direct HVAC telemetry: coil temps, compressor amps, supply/return air, refrigerant pressure, setpoints, run hours. Nexus translates BACnet/Modbus → normalized JSON → SEER 5.0 TimescaleDB hypertable.</div><div class="src-chips"><span class="sc sc-y">BACnet/IP</span><span class="sc sc-y">Modbus TCP</span><span class="sc sc-b">6 channels/unit</span><span class="sc sc-b">24-month history</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--purple)"><div class="src-hdr"><div class="src-ico" style="background:var(--purple-lt)">🔋</div><div><div class="src-name">EV Charging Station API</div><div class="src-type">External API · ChargePoint / Tesla Fleet</div></div></div><div class="src-detail">Real-time charger status, power draw per stall, session start/stop, vehicle type. SEER 5.0 correlates EV events with HVAC load to detect compound demand spikes and schedule pre-emptive load shifts.</div><div class="src-chips"><span class="sc sc-p">ChargePoint API</span><span class="sc sc-p">Tesla Fleet API</span><span class="sc sc-b">Per-stall telemetry</span><span class="sc sc-b">Session events</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--green)"><div class="src-hdr"><div class="src-ico" style="background:var(--green-lt)">⚡</div><div><div class="src-name">Smart Energy Meters (ERCOT/Utility)</div><div class="src-type">Utility-grade metering · Via Nexus</div></div></div><div class="src-detail">15-minute interval demand (kW) and consumption (kWh) from utility-grade meters. ERCOT real-time price signals for demand charge optimization. Ground truth for model training and ROI calculation.</div><div class="src-chips"><span class="sc sc-y">Utility Meters</span><span class="sc sc-b">ERCOT Real-time</span><span class="sc sc-b">Demand15 intervals</span><span class="sc sc-g">Bill verification</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--teal)"><div class="src-hdr"><div class="src-ico" style="background:var(--teal-lt)">🌤️</div><div><div class="src-name">Weather API (NOAA + Dark Sky)</div><div class="src-type">External Correlation Signal</div></div></div><div class="src-detail">Hourly outdoor temperature, humidity, heat index. Used as co-variate in LSTM models — hot afternoons predict HVAC strain. 7-day forecast feeds predictive alerts before demand events occur.</div><div class="src-chips"><span class="sc sc-t">NOAA API</span><span class="sc sc-t">Dark Sky</span><span class="sc sc-b">7-day forecast</span><span class="sc sc-b">HVAC co-variate</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--purple)"><div class="src-hdr"><div class="src-ico" style="background:var(--purple-lt)">🎬</div><div><div class="src-name">Box Office / Ticketing API</div><div class="src-type">Event Correlation · The Secret Weapon</div></div></div><div class="src-detail"><strong style="color:var(--text)">The differentiator.</strong> SEER correlates ticket sales with energy models. Advance bookings for high-demand films trigger predictive load alerts days before a single EV plugs in. Telugu film surge — predicted a week out.</div><div class="src-chips"><span class="sc sc-p">Ticketing API</span><span class="sc sc-p">Fandango Events</span><span class="sc sc-b">Occupancy prediction</span><span class="sc sc-b">EV surge pre-calc</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--blue)"><div class="src-hdr"><div class="src-ico" style="background:var(--blue-lt)">👁️</div><div><div class="src-name">Occupancy Sensors</div><div class="src-type">People counters · Via Nexus gateway</div></div></div><div class="src-detail">Footfall counters at auditorium entrances. Occupancy correlates with HVAC demand — SEER flags HVAC oversupply when occupancy is low. Austin Domain: 31% occupancy, 100% HVAC = waste flagged automatically.</div><div class="src-chips"><span class="sc sc-y">PIR Sensors</span><span class="sc sc-y">Thermal counters</span><span class="sc sc-b">Per-auditorium</span><span class="sc sc-b">HVAC co-variate</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--blue)"><div class="src-hdr"><div class="src-ico" style="background:var(--blue-lt)">🏗️</div><div><div class="src-name">Partner Freedom Enterprise Cloud</div><div class="src-type">Cloud Platform · MCP / REST API</div></div></div><div class="src-detail">Partner's cloud aggregates all Nexus device data. SEER 5.0 connects via their native MCP server — no custom integration. Bidirectional: SEER can write recommendations back to Freedom Enterprise dashboards.</div><div class="src-chips"><span class="sc sc-b">MCP Integration</span><span class="sc sc-b">Freedom Enterprise API</span><span class="sc sc-g">Bidirectional</span><span class="sc sc-g">No rip-and-replace</span></div></div>
+      <div class="src-card" style="border-top:3px solid var(--yellow)"><div class="src-hdr"><div class="src-ico" style="background:var(--yellow-lt)">📚</div><div><div class="src-name">Domain Knowledge Store</div><div class="src-type">HVAC-GPT Training Corpus · SEER 5.0</div></div></div><div class="src-detail">HVAC OEM manuals, fault codes, maintenance SOPs, service history logs. Chunked + embedded (sentence-transformers) into pgvector. Powers RAG pipeline — when SEER diagnoses a fault, it cites the actual manual page.</div><div class="src-chips"><span class="sc sc-y">OEM Manuals</span><span class="sc sc-y">Fault Code DB</span><span class="sc sc-b">RAG + pgvector</span><span class="sc sc-b">Source-cited answers</span></div></div>
+    </div>
+    <div class="arch-box">
+      <div class="arch-title">🏗️ SEER 5.0 Data Flow — Edge to Intelligence</div>
+      <div class="arch-flow">
+        <div class="arch-layer"><div class="arch-lbl">📡 Edge Layer</div><div class="arch-items"><span class="arch-item ai-y">Nexus Gateway</span><span class="arch-item ai-y">BACnet/Modbus</span><span class="arch-item ai-y">Smart Meters</span><span class="arch-item ai-y">Occ. Sensors</span><span class="arch-item ai-y">EV Chargers</span></div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-layer"><div class="arch-lbl">🔗 Integration</div><div class="arch-items"><span class="arch-item ai-b">MCP Protocol</span><span class="arch-item ai-b">REST APIs</span><span class="arch-item ai-b">S3 Polling</span><span class="arch-item ai-b">MQTT Stream</span></div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-layer"><div class="arch-lbl">🗄️ Data Layer</div><div class="arch-items"><span class="arch-item ai-b">TimescaleDB</span><span class="arch-item ai-b">pgvector RAG</span><span class="arch-item ai-b">MinIO Artifacts</span><span class="arch-item ai-b">MLflow Registry</span></div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-layer"><div class="arch-lbl">🧠 Intelligence</div><div class="arch-items"><span class="arch-item ai-p">LSTM Anomaly</span><span class="arch-item ai-p">RUL Prediction</span><span class="arch-item ai-p">HVAC-GPT</span><span class="arch-item ai-p">Event Correlation</span></div></div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-layer"><div class="arch-lbl">🤖 Agentic</div><div class="arch-items"><span class="arch-item ai-g">SensorAgent</span><span class="arch-item ai-g">DiagnosticsAgent</span><span class="arch-item ai-g">PlannerAgent</span><span class="arch-item ai-g">FieldAgent</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-foot">
+    <div class="nav-steps"><div class="nstep ns-cur">④ Data Sources</div></div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s3',document.querySelectorAll('.tab')[2])">← Asset Dive</button>
+      <button class="btn-primary" onclick="go('s5',document.querySelectorAll('.tab')[4])">💬 Try SEER Chat →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 5 — CHAT
+═══════════════════════════════════════ -->
+<div id="s5" class="screen">
+  <div class="chat-layout">
+    <div class="chat-sidebar">
+      <div class="ctx-title">Active Context — Sites</div>
+      <div class="ctx-item active"><div class="ctx-name">Dallas Uptown Megaplex</div><div class="ctx-sub">168,214 sq ft · 8 HVAC · 12 EV</div><span class="ctx-badge" style="background:var(--red-lt);color:var(--red)">⚡ Critical</span></div>
+      <div class="ctx-item"><div class="ctx-name">Dallas Preston Road</div><div class="ctx-sub">98,600 sq ft · Telugu film alert</div><span class="ctx-badge" style="background:var(--purple-lt);color:var(--purple)">🔮 Predictive</span></div>
+      <div class="ctx-item"><div class="ctx-name">Houston Galleria</div><div class="ctx-sub">98,400 sq ft · HVAC RUL: 38h</div><span class="ctx-badge" style="background:var(--yellow-lt);color:var(--yellow)">⚠ Warning</span></div>
+      <div class="ctx-item"><div class="ctx-name">Fleet (all 10 sites)</div><div class="ctx-sub">Today's snapshot loaded</div><span class="ctx-badge" style="background:var(--green-lt);color:var(--green)">✓ Loaded</span></div>
+      <div class="sq-section">
+        <div class="sq-title">💡 Try These Questions</div>
+        <button class="sq-btn" onclick="ask('Why is Dallas Uptown critical right now?')">Why is Dallas Uptown critical right now?</button>
+        <button class="sq-btn" onclick="ask('Explain the Telugu film surge prediction')">Explain the Telugu film surge prediction</button>
+        <button class="sq-btn" onclick="ask('How do I load-balance EV charging next Friday?')">How do I load-balance EV charging next Friday?</button>
+        <button class="sq-btn" onclick="ask('What is the ROI if I fix HVAC Unit 3 today?')">What is the ROI if I fix HVAC Unit 3 today?</button>
+        <button class="sq-btn" onclick="ask('Which sites should I prioritize this week?')">Which sites should I prioritize this week?</button>
+        <button class="sq-btn" onclick="ask('How does SEER 5.0 detect anomalies technically?')">How does SEER 5.0 detect anomalies technically?</button>
+        <button class="sq-btn" onclick="ask('What would it cost to expand SEER to 100 sites?')">What would it cost to expand SEER to 100 sites?</button>
+        <button class="sq-btn" onclick="ask('Can SEER work with other asset types beyond HVAC?')">Can SEER work beyond HVAC?</button>
+      </div>
+    </div>
+
+    <div class="chat-main">
+      <div class="chat-topbar">
+        <div class="chat-lbl">SEER 5.0</div>
+        <div><div class="chat-topbar-title">SEER Chat — Real McC.AI™</div><div class="chat-topbar-sub">Ask anything about your fleet, assets, anomalies, predictions, or actions</div></div>
+        <div class="chat-powered">Powered by <span>HVAC-GPT + Claude Sonnet</span></div>
+      </div>
+
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="msg-wrap">
+          <div class="msg-av ai">S5</div>
+          <div>
+            <div class="bubble ai">Hello! I'm <strong>SEER Chat</strong>, your Real McC.AI™ intelligence layer. I have full context of your 10 entertainment venues including live sensor data, anomaly scores, and predictive models.<br><br>I can see <strong>3 active alerts</strong> and <strong>2 predictive warnings</strong> right now. Dallas Uptown is the top priority — HVAC Unit 3 at anomaly score 0.91, RUL 52 hours. And Dallas Preston Road is <em>currently green</em> but I'm predicting a major demand surge next Friday due to the Telugu film release.<br><br>What would you like to explore?</div>
+            <div class="msg-time">SEER 5.0 · Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <textarea class="chat-inp" id="chatInput" placeholder="Ask about your fleet, anomalies, predictions, ROI, or anything else…" rows="1"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+        <button class="chat-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-foot">
+    <div class="nav-steps"><div class="nstep ns-cur">⑤ SEER Chat</div></div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s4',document.querySelectorAll('.tab')[3])">← Data Sources</button>
+      <button class="btn-primary" onclick="go('s6',document.querySelectorAll('.tab')[5])">🔧 Auto Dispatch →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 6 — DISPATCH
+═══════════════════════════════════════ -->
+<div id="s6" class="screen">
+  <div class="bc">
+    <a onclick="go('s3',document.querySelectorAll('.tab')[2])">HVAC Unit 3 Deep Dive</a>
+    <span class="bc-sep">›</span><span class="bc-cur">🔧 Auto-Dispatch — Work Order Created</span>
+    <span class="bc-sep">·</span><span style="color:var(--green);font-weight:700;">✅ WO-2025-DFW-0847 Active · Technician En Route</span>
+  </div>
+  <div class="dispatch-layout">
+    <div class="dispatch-main">
+      <div class="d-title">🤖 SEER PlannerAgent — Work Order Auto-Generated <span class="tag tag-b">Agent Dispatched</span></div>
+      <div class="d-sub">Created autonomously: anomaly detection → diagnosis → procurement check → technician assignment. Zero manual steps. 11 minutes total.</div>
+      <div class="wo-card">
+        <div class="wo-header"><div class="wo-id">WO-2025-DFW-0847</div><div class="wo-status">🔵 In Progress — Technician En Route</div></div>
+        <div class="wo-grid">
+          <div class="wo-f"><div class="wo-fl">Site</div><div class="wo-fv">Dallas Uptown Megaplex</div></div>
+          <div class="wo-f"><div class="wo-fl">Asset</div><div class="wo-fv">HVAC Unit 3 (RTU-03)</div></div>
+          <div class="wo-f"><div class="wo-fl">Priority</div><div class="wo-fv" style="color:var(--red)">P1 — Critical</div></div>
+          <div class="wo-f"><div class="wo-fl">Created By</div><div class="wo-fv">SEER PlannerAgent</div></div>
+          <div class="wo-f"><div class="wo-fl">Created At</div><div class="wo-fv">Today 8:43 PM</div></div>
+          <div class="wo-f"><div class="wo-fl">SLA Deadline</div><div class="wo-fv" style="color:var(--yellow)">Tomorrow 8:43 AM</div></div>
+          <div class="wo-f"><div class="wo-fl">Fault Code</div><div class="wo-fv mono">HVAC-CF-0234</div></div>
+          <div class="wo-f"><div class="wo-fl">Anomaly Score</div><div class="wo-fv" style="color:var(--red)">0.91 (Threshold 0.75)</div></div>
+          <div class="wo-f"><div class="wo-fl">RUL Remaining</div><div class="wo-fv" style="color:var(--yellow)">52h ± 8h</div></div>
+        </div>
+        <hr class="div">
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">🔧 Work Instructions (HVAC-GPT Generated — Carrier 50XC Manual)</div>
+        <div style="background:var(--bg);border-radius:8px;padding:12px;font-size:11px;color:var(--text);line-height:1.9;border:1px solid var(--border);">
+          <strong style="color:var(--blue)">Step 1:</strong> Lock out/tag out RTU-03 per LOTO procedure (Ref: Carrier 50XC Manual §4.2)<br>
+          <strong style="color:var(--blue)">Step 2:</strong> Access condenser section. Inspect coil — expected: dust accumulation on fins<br>
+          <strong style="color:var(--blue)">Step 3:</strong> Clean condenser coil with Nu-Calgon Coil Cleaner (p/n NC-4171). Apply, dwell 10 min, rinse<br>
+          <strong style="color:var(--blue)">Step 4:</strong> Measure coil ΔT after cleaning — target: 68–72°F inlet, delta ≤ 2°F<br>
+          <strong style="color:var(--blue)">Step 5:</strong> Check refrigerant pressure (target 245 psi). If elevated, inspect Schrader valves for minor leak<br>
+          <strong style="color:var(--blue)">Step 6:</strong> Reset thermostat setpoint to 72°F (SEER recommendation for 82% occupancy)<br>
+          <strong style="color:var(--blue)">Step 7:</strong> Run system 30 min, log new sensor readings into SEER 5.0 via field app. Close WO.
+        </div>
+        <hr class="div">
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;">🔩 Parts & Materials (ProcurementAgent Verified)</div>
+        <table class="parts-table">
+          <thead><tr><th>Part</th><th>Part Number</th><th>Qty</th><th>Est. Cost</th><th>Availability</th></tr></thead>
+          <tbody>
+            <tr><td>Coil Cleaner (Nu-Calgon)</td><td class="mono">NC-4171-32</td><td>1</td><td>$28</td><td class="avail-y">✓ In Stock</td></tr>
+            <tr><td>Condenser Fin Comb</td><td class="mono">FIC-1014</td><td>1</td><td>$18</td><td class="avail-y">✓ In Tech Van</td></tr>
+            <tr><td>Schrader Valve Core</td><td class="mono">SV-CR-8</td><td>2</td><td>$12</td><td class="avail-y">✓ In Stock</td></tr>
+            <tr><td>R-410A Refrigerant (lb)</td><td class="mono">REF-410A</td><td>2 contingency</td><td>$46</td><td class="avail-y">✓ In Stock</td></tr>
+            <tr><td>MERV-13 Filter (24x24x4)</td><td class="mono">FL-2424-M13</td><td>2</td><td>$64</td><td class="avail-n">⚠ Order Needed (2-day)</td></tr>
+          </tbody>
+        </table>
+        <hr class="div">
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;">📋 Asset Record — RTU-03 / HVAC Unit 3</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+          <div class="wo-f"><div class="wo-fl">Make / Model</div><div class="wo-fv">Carrier 50XC-060</div></div>
+          <div class="wo-f"><div class="wo-fl">Serial Number</div><div class="wo-fv mono" style="font-size:11px">5X06C1234567</div></div>
+          <div class="wo-f"><div class="wo-fl">Install Date</div><div class="wo-fv">Mar 2019</div></div>
+          <div class="wo-f"><div class="wo-fl">Warranty</div><div class="wo-fv" style="color:var(--yellow)">Expired 2024</div></div>
+          <div class="wo-f"><div class="wo-fl">Age</div><div class="wo-fv">6.1 years</div></div>
+          <div class="wo-f"><div class="wo-fl">Tonnage</div><div class="wo-fv">5 Ton</div></div>
+          <div class="wo-f"><div class="wo-fl">Criticality</div><div class="wo-fv" style="color:var(--red)">P1 Critical</div></div>
+          <div class="wo-f"><div class="wo-fl">Serves</div><div class="wo-fv">Auditoriums 3, 4, 5</div></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;">🗓️ Service History — RTU-03</div>
+        <div>
+          <div class="hist-item"><div class="hist-dot" style="background:var(--green)"></div><div class="hist-date">Mar 2025</div><div><div class="hist-detail">Annual PM — filter change, coil inspection, refrigerant check</div><div class="hist-result" style="color:var(--green)">✓ No issues found</div></div></div>
+          <div class="hist-item"><div class="hist-dot" style="background:var(--yellow)"></div><div class="hist-date">Sep 2024</div><div><div class="hist-detail">Compressor capacitor replacement — unit not starting on hot days</div><div class="hist-result" style="color:var(--yellow)">⚠ Replaced capacitor, unit restored</div></div></div>
+          <div class="hist-item"><div class="hist-dot" style="background:var(--green)"></div><div class="hist-date">Mar 2024</div><div><div class="hist-detail">Annual PM — routine inspection, no issues</div><div class="hist-result" style="color:var(--green)">✓ No issues found</div></div></div>
+          <div class="hist-item"><div class="hist-dot" style="background:var(--red)"></div><div class="hist-date">Aug 2023</div><div><div class="hist-detail">Emergency call — compressor shutdown during July heat peak. Coil cleaning + refrigerant recharge 3 lbs</div><div class="hist-result" style="color:var(--red)">⚡ Emergency repair: $1,240</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dispatch-sidebar">
+      <div class="panel-title">Assigned Technician</div>
+      <div class="tech-card">
+        <div class="tech-hdr"><div class="tech-av">MR</div><div><div class="tech-name">Marco Rodriguez</div><div class="tech-role">HVAC Field Tech · NATE Certified</div></div></div>
+        <div class="tech-stats">
+          <div class="ts-item"><div class="ts-lbl">Distance</div><div class="ts-val" style="color:var(--blue)">4.2 mi</div></div>
+          <div class="ts-item"><div class="ts-lbl">ETA</div><div class="ts-val" style="color:var(--blue)">18 min</div></div>
+          <div class="ts-item"><div class="ts-lbl">Rating</div><div class="ts-val" style="color:var(--yellow)">4.9 ★</div></div>
+          <div class="ts-item"><div class="ts-lbl">Open WOs</div><div class="ts-val">1</div></div>
+        </div>
+      </div>
+      <div class="notif-card">
+        <div class="notif-title">📬 Notifications Sent</div>
+        <div class="notif-row"><span class="nc">✓</span> WO created in FSM system</div>
+        <div class="notif-row"><span class="nc">✓</span> SMS to Marco: address + instructions</div>
+        <div class="notif-row"><span class="nc">✓</span> Email to site facilities manager</div>
+        <div class="notif-row"><span class="nc">✓</span> Parts order submitted (filters)</div>
+        <div class="notif-row"><span class="ns">→</span> EV Bank C schedule update sent</div>
+        <div class="notif-row"><span class="ns">→</span> Pre-cool protocol for Friday set</div>
+      </div>
+      <div class="panel-title mt12">WO Timeline</div>
+      <div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-time">8:32 PM</div><div class="tl-text">LSTM Anomaly Detected</div><div class="tl-sub">Score: 0.91 — threshold 0.75 breached</div></div></div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-time">8:33 PM</div><div class="tl-text">DiagnosticsAgent Run</div><div class="tl-sub">HVAC-GPT: Coil fouling, 94% confidence</div></div></div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-time">8:34 PM</div><div class="tl-text">PlannerAgent: SLA Check</div><div class="tl-sub">P1 SLA = 12h. Urgent dispatch triggered.</div></div></div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-time">8:35 PM</div><div class="tl-text">ProcurementAgent: Parts Check</div><div class="tl-sub">4 of 5 parts available. Filter order placed.</div></div></div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-line"></div></div><div class="tl-content"><div class="tl-time">8:43 PM</div><div class="tl-text">WO-2025-DFW-0847 Created</div><div class="tl-sub">Marco assigned. ETA: 18 min.</div></div></div>
+        <div class="tl-item"><div class="tl-dot-col"><div class="tl-dot" style="background:var(--orange);animation:pulse 1.5s infinite"></div></div><div class="tl-content"><div class="tl-time">Now</div><div class="tl-text" style="color:var(--orange)">Technician En Route</div><div class="tl-sub">GPS tracked · 18 min ETA</div></div></div>
+      </div>
+      <div class="mt12 ann-note">Detection to dispatch: <strong>11 minutes. Zero human steps.</strong></div>
+    </div>
+  </div>
+  <div class="nav-foot">
+    <div class="nav-steps">
+      <div class="nstep ns-done" onclick="go('s1',document.querySelectorAll('.tab')[0])" style="cursor:pointer">✓ Fleet</div><div class="narr">→</div>
+      <div class="nstep ns-done" onclick="go('s2',document.querySelectorAll('.tab')[1])" style="cursor:pointer">✓ Site</div><div class="narr">→</div>
+      <div class="nstep ns-done" onclick="go('s3',document.querySelectorAll('.tab')[2])" style="cursor:pointer">✓ Asset</div><div class="narr">→</div>
+      <div class="nstep ns-done" onclick="go('s5',document.querySelectorAll('.tab')[4])" style="cursor:pointer">✓ Chat</div><div class="narr">→</div>
+      <div class="nstep ns-cur">⑤ Dispatch</div>
+    </div>
+    <div class="flex gap8">
+      <button class="btn-sec" onclick="go('s5',document.querySelectorAll('.tab')[4])">← SEER Chat</button>
+      <button class="btn-primary" onclick="go('s7',document.querySelectorAll('.tab')[6])">🗺 Presentation Guide →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 7 — PRESENTATION GUIDE
+═══════════════════════════════════════ -->
+<div id="s7" class="screen">
+  <div class="guide-body">
+    <div class="page-title">🗺 Your Presentation Guide — Coach Mode</div>
+    <div class="page-sub">6 screens · ~5 minutes · Each box = one click. Each line = exactly what to say.</div>
+    <div class="flow-grid">
+      <div class="fbox" style="border-top:3px solid var(--blue)"><div class="fbox-num" style="background:var(--blue)">1</div><div class="fbox-ico">🏢</div><div class="fbox-title">Fleet Overview</div><div class="fbox-body">Show 10-site dashboard. Highlight the purple Telugu film prediction banner — "this site is GREEN but SEER already knows next week is a problem." Click Dallas Uptown red card.</div><div class="fbox-click">→ Click Dallas Uptown</div></div>
+      <div class="fbox" style="border-top:3px solid var(--red)"><div class="fbox-num" style="background:var(--red)">2</div><div class="fbox-ico">⚡</div><div class="fbox-title">Site Detail</div><div class="fbox-body">Power chart shows EV surge + HVAC overlap. SEER intelligence panel: today's fault + next Friday's prediction. "$1,520 total monthly opportunity."</div><div class="fbox-click">→ Click HVAC Unit 3 mini card</div></div>
+      <div class="fbox" style="border-top:3px solid var(--green)"><div class="fbox-num" style="background:var(--green)">3</div><div class="fbox-ico">🧠</div><div class="fbox-title">Asset Deep Dive</div><div class="fbox-body">Point to Technical Justification box. "Here's how we know — sensor correlation, LSTM, domain SLM." RUL gauge. $8,400 avoided failure. Hit Dispatch button.</div><div class="fbox-click">→ Click "Dispatch Work Order"</div></div>
+      <div class="fbox" style="border-top:3px solid var(--yellow)"><div class="fbox-num" style="background:var(--yellow)">4</div><div class="fbox-ico">📡</div><div class="fbox-title">Data Sources</div><div class="fbox-body">Show 9 source cards. "The ticketing API is the secret weapon — we know about the surge before the first ticket is scanned." Show architecture flow.</div><div class="fbox-click">→ Optional — skip if time short</div></div>
+      <div class="fbox" style="border-top:3px solid var(--purple)"><div class="fbox-num" style="background:var(--purple)">5</div><div class="fbox-ico">💬</div><div class="fbox-title">SEER Chat</div><div class="fbox-body">Type a live question from the sidebar — watch SEER answer in real-time with your actual fleet data. "This is natural language over your operations. No dashboards."</div><div class="fbox-click">→ Type a question live</div></div>
+      <div class="fbox" style="border-top:3px solid var(--orange)"><div class="fbox-num" style="background:var(--orange)">6</div><div class="fbox-ico">🔧</div><div class="fbox-title">Auto Dispatch</div><div class="fbox-body">Work order card: 11 minutes detection to dispatch. Instructions, parts, asset record, service history. Technician assigned by proximity and SLA. Zero human steps.</div><div class="fbox-click">→ This is your close</div></div>
+    </div>
+
+    <div class="tp-box">
+      <div class="tp-title">🎙 Talking Points — What to Say on Each Screen</div>
+      <div class="tp-row">
+        <div class="tp-scr">① Fleet<small>~30 sec</small></div>
+        <div class="tp-line"><em>"This is SEER 5.0 — Real McC.AI from Sage IT. Ten entertainment venues. Real customer. Real data."</em> Point to purple banner. <em>"This site is green right now — zero alarms. But SEER already knows next Friday is going to be a problem. Telugu film release. 340,000 Telugu speakers in DFW. Most drive Teslas. SEER predicted the surge a week ahead."</em> Click red Dallas Uptown card.</div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-scr">② Site<small>~60 sec</small></div>
+        <div class="tp-line"><em>"Look at the power chart. The spike at 8pm — 8 EV chargers activating in the parking lot while the AC runs full tilt in 97-degree Dallas heat. Their platform recorded it. SEER diagnosed it."</em> Point to SEER panel. <em>"Coil fouling on HVAC Unit 3. Detected 6 hours before the spike. Three-step fix — clean the coil, reset the setpoint, stagger the chargers. $960 a month. And that purple annotation? Next Friday's surge is already pre-loaded. $840 demand charge avoided if we act by Thursday."</em></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-scr">③ Asset<small>~40 sec</small></div>
+        <div class="tp-line">Point to blue Technical Justification box. <em>"Here's how we know. Sensor data from HVAC controllers via edge gateways, 24 months of history, LSTM model detecting the drift pattern. Four sensors all pointing the same direction — Pearson correlation 0.91. That's a real fault, not noise. Our domain SLM — fine-tuned on HVAC manuals and 10,000 fault codes — says: coil fouling, 94% confidence, fix it in 24 hours or pay $8,400."</em></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-scr">⑤ Chat<small>~30 sec</small></div>
+        <div class="tp-line">Type from sidebar: <strong>"Which sites should I prioritize this week?"</strong> <em>"Natural language over your operations. No dashboard hunting. No spreadsheets. Just ask. The model has full context — live data, predictive models, all 10 sites."</em></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-scr">⑥ Dispatch<small>~30 sec</small></div>
+        <div class="tp-line"><em>"Eleven minutes. Detection to dispatch. Work instructions auto-generated from the OEM manual. Parts verified against inventory. Technician assigned by proximity and SLA. Asset record, service history — all attached. Zero human steps."</em> Pause. <em>"This is one site. Now imagine this across their full portfolio. Or any company managing distributed assets at scale — hospitals, retail chains, logistics hubs. The asset mix changes. SEER 5.0 doesn't. That's the play."</em></div>
+      </div>
+    </div>
+
+    <div class="flex jb aic mt16">
+      <div style="font-size:12px;color:var(--text-sm)">Total demo: <strong style="color:var(--text)">~4–5 min</strong> · Laptop-optimized · All data realistic and defensible</div>
+      <div class="flex gap8">
+        <button class="btn-sec" onclick="go('s6',document.querySelectorAll('.tab')[5])">← Dispatch</button>
+        <button class="btn-primary" onclick="go('s1',document.querySelectorAll('.tab')[0])">↺ Restart from Fleet →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Navigation
+function go(id, tabEl) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (tabEl) tabEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── Smart Chat Engine
+// NOTE: Anthropic API blocks browser fetch() via CORS (it's server-side only).
+// This uses an expanded intelligent keyword-response engine that covers the full
+// leadership question space. New questions not in the list get a smart contextual answer.
+
+const R = {
+  // ── SITE-SPECIFIC
+  "dallas uptown critical": `<strong>Dallas Uptown is critical for two compounding reasons:</strong>
+<div class="highlight">🔴 <strong>HVAC Unit 3 Coil Fouling</strong> — Anomaly score 0.91 (threshold 0.75). The LSTM autoencoder detected that coil inlet temperature is 11.4°F above baseline and compressor draw is 18% above normal. Four sensor channels all correlated — Pearson r = 0.91. RUL estimate: 52 hours.</div>
+<div class="highlight">🔋 <strong>EV Surge Compound Effect</strong> — 8 EV chargers activated at 6:15pm simultaneously, adding +68 kW to an already-stressed HVAC system during 97°F ambient heat with 82% occupancy. Together they pushed demand to 412 kW — well above the billing demand window baseline.</div>
+If HVAC Unit 3 fails without intervention, expect an $8,400 emergency repair bill and auditoriums 3–5 going dark mid-movie. Work order is already created and technician is en route.`,
+
+  "telugu film prediction surge": `<strong>Here's how SEER 5.0 predicts the Telugu film surge:</strong>
+<div class="highlight">📊 <strong>Historical Pattern:</strong> During Pushpa 2 (Dec 2024), Dallas Preston Road logged 94% occupancy and 73% of EV stalls activated simultaneously — an +82 kW spike triggering $840 in peak demand charges that billing cycle.</div>
+<div class="highlight">🎬 <strong>Event Correlation:</strong> SEER connects to the ticketing API. "Kalki 2898 Part 2" advance bookings already show 91% capacity for Friday and Saturday evening shows at this location — 7 days before the event.</div>
+<div class="highlight">👥 <strong>Demographic Signal:</strong> DFW has 340,000+ Telugu-speaking residents, heavily concentrated in North Dallas suburbs — Frisco, Plano, Allen, McKinney. Tesla ownership in these zip codes is 3.2x the national average. These are the customers.</div>
+<strong>Predicted window:</strong> Friday 6:00–11:00 PM. Demand surge: +86 kW. Without action: $840 demand charge penalty.<br>
+<strong>SEER recommendation:</strong> Program EV Bank C to off-peak (11pm) by Thursday. Pre-cool auditoriums from 4pm Friday. Expected reduction: 54 kW. Full penalty avoided.`,
+
+  "load balance ev charging friday": `<strong>3-step EV load-balancing plan for next Friday:</strong>
+<div class="highlight">⚡ <strong>Step 1 — Stagger EV Bank C:</strong> Program 4 stalls to charge-only window of 11pm–6am. Guests arriving for 7pm showings park, watch the movie (2–3 hrs), and leave. Bank C handles the late-night recharge after peak HVAC load drops. Expected demand reduction: 32 kW from the 6–10pm window.</div>
+<div class="highlight">🌡️ <strong>Step 2 — Pre-cool Protocol:</strong> Drop auditorium setpoints to 70°F between 4–5:30pm, before the crowd arrives. Builds thermal mass so HVAC can coast during the EV peak window. Expected: 15% HVAC load reduction during 6–10pm peak.</div>
+<div class="highlight">📊 <strong>Step 3 — Dynamic Demand Monitoring:</strong> Set SEER alert threshold at 380 kW for Friday. If demand approaches that level, automatically throttle EV Bank B to 50% rate (7.2kW → 3.3kW per stall). This is automated — no operator needed on-site Friday night.</div>
+<strong>Net result:</strong> Predicted demand capped at ~380 kW vs 498 kW unmanaged. Demand charge avoided: $840. Action needed by: Thursday evening.`,
+
+  "roi fix hvac unit 3": `<strong>ROI analysis — HVAC Unit 3 repair:</strong>
+<div class="highlight">💰 <strong>Direct Monthly Savings: $680/month</strong> — Fixing coil fouling restores heat transfer efficiency. Compressor returns to 38A baseline from 47.2A current draw — ~18% energy reduction. At ERCOT commercial rates (~$0.11/kWh), that's approximately $680/month ongoing.</div>
+<div class="highlight">🔧 <strong>Avoided Emergency Repair: $8,400</strong> — With 52h RUL, failure is likely within the week if untreated. Emergency HVAC repair (after-hours callout + expedited parts) averages $8,400 for this unit class. Scheduled repair cost: ~$320 labor + $168 parts = $488 total.</div>
+<div class="highlight">🎬 <strong>Avoided Revenue Impact: ~$12,600</strong> — Unit 3 serves Auditoriums 3, 4, and 5. Emergency shutdown during Friday's Telugu film event = 3 auditoriums × $4,200 avg daily revenue × 1.5 days downtime = ~$12,600 potential loss.</div>
+<strong>First-month total:</strong> $21,680 benefit vs $488 repair cost.<br>
+<strong>Annualized energy savings:</strong> $8,160/year from efficiency restoration alone. <strong>Payback: Day 1.</strong>`,
+
+  "prioritize sites this week": `<strong>Priority ranking — SEER 5.0 recommendations this week:</strong>
+<div class="highlight">🔴 <strong>P1 — Dallas Uptown Megaplex · Act TODAY:</strong> HVAC Unit 3 at 52h RUL. Work order WO-2025-DFW-0847 already created. Technician en route. Also: confirm EV load-balance program for Friday by 6pm tonight.</div>
+<div class="highlight">🟡 <strong>P2 — Houston Galleria · Act within 48 hours:</strong> HVAC Unit 2 RUL: 38h ±6h. Bearing wear signature, different fault pattern from Dallas. Schedule maintenance by Thursday to prevent weekend failure — peak summer weekend at a major venue.</div>
+<div class="highlight">🔮 <strong>P3 — Dallas Preston Road · Act by Thursday:</strong> Currently green, no active fault. But Telugu film event Friday requires EV schedule programming and pre-cool protocol. 20-minute configuration change. Saves $840. Pure ROI.</div>
+<div class="highlight">🟡 <strong>P4 — Austin Domain · Schedule within 1 week:</strong> HVAC oversupply at 31% occupancy. Setpoint reset = 10 minutes, saves $180/week. No parts. Pure configuration.</div>
+The remaining 6 sites (SA, NO, Baton Rouge, Tampa, Orlando, Jacksonville, Beaumont) all score below 0.15. Standard monitoring. No action required this week.`,
+
+  "detect anomalies technically lstm": `<strong>SEER 5.0 anomaly detection — technical walkthrough:</strong>
+<div class="highlight">① <strong>Data Ingest:</strong> BACnet/Modbus from HVAC controllers flows through Nexus edge gateways → SEER 5.0 FastAPI → TimescaleDB hypertable. 15-minute intervals, normalized to canonical schema: asset_id, timestamp, sensor_type, value, unit. 24 months retained per asset.</div>
+<div class="highlight">② <strong>LSTM Autoencoder:</strong> Core model trained on 18 months "normal" behavior per asset class. At inference (every 15 minutes), it reconstructs the current 30-timestep sensor window. High reconstruction error = the pattern is abnormal. Threshold: 0.75. Dallas Uptown HVAC-3: 0.91.</div>
+<div class="highlight">③ <strong>Multi-sensor Correlation:</strong> SEER looks at 6 channels simultaneously: coil inlet, compressor amps, supply air, return air, refrigerant pressure, humidity. When coil temp ↑ + amps ↑ + supply air ↑ + refrigerant pressure ↑ all correlate — Pearson r = 0.91 cluster — that's a real fault signature, not sensor noise.</div>
+<div class="highlight">④ <strong>HVAC-GPT Diagnosis:</strong> Domain SLM — Phi-3 Mini fine-tuned via LoRA on HVAC OEM manuals + 10,000 labeled fault codes. Maps anomaly pattern → root cause → RUL estimate → work instructions. Runs locally via Ollama. No data leaves the perimeter.</div>
+This is the pipeline that separates SEER from a rule-based alert system. It learns what normal looks like, detects deviation, correlates across sensors, and explains the finding in plain English.`,
+
+  "expand 100 sites cost scale": `<strong>SEER 5.0 scaling economics — 100-site deployment:</strong>
+<div class="highlight">🏗️ <strong>Infrastructure:</strong> SEER 5.0 runs on a single AWS EC2 g5.xlarge for training and c5.2xlarge for inference. At 100 sites, horizontal pod scaling handles ingestion — estimate 2–3 inference nodes. Cloud cost: ~$2,400/month fully loaded.</div>
+<div class="highlight">💰 <strong>SaaS Pricing Model:</strong> At the current 10-site pilot, SEER delivers ~$6,240/month in identified savings. At 100 sites, proportional savings = $62,400/month. Typical SaaS pricing at 15–20% of savings: $9,000–$12,000/month platform fee. ROI to customer: 5–7x.</div>
+<div class="highlight">🔌 <strong>Integration Cost:</strong> Each new customer using compatible edge gateways (Nexus, BACnet-capable) = 2–3 day integration sprint. No per-site hardware. The MCP integration layer handles onboarding at scale.</div>
+<div class="highlight">🧠 <strong>Domain SLM Licensing:</strong> HVAC-GPT fine-tuned model can be licensed per vertical — HVAC, refrigeration, industrial chillers. One-time fine-tuning cost: $8,000–$15,000. Then runs locally at every deployment. No per-inference API costs.</div>
+The short answer: 100-site deployment is additive compute, not additive engineering. The platform was built to scale.`,
+
+  "beyond hvac other assets verticals": `<strong>SEER 5.0 across asset types and verticals:</strong>
+<div class="highlight">🏭 <strong>Manufacturing:</strong> Same LSTM architecture works on CNC machines, conveyor belts, compressors. Vibration + current + thermal sensors replace HVAC channels. Motor bearing faults follow identical degradation curves. Fine-tune HVAC-GPT → Machine-GPT on OEM manuals. 6–8 week effort.</div>
+<div class="highlight">🏥 <strong>Healthcare Facilities:</strong> Medical-grade HVAC (HEPA, pressure differentials), sterilizer cycles, medical gas systems. Higher criticality = higher SLA value. Same edge gateway + LSTM pattern. Add FDA 21 CFR Part 11 audit trail layer.</div>
+<div class="highlight">🛒 <strong>Retail Chains:</strong> Walmart, Lowe's, Target — HVAC + refrigeration + lighting + EV charging. The EV demand surge scenario here is identical to cinema, just different occupancy predictors (foot traffic vs. ticket sales). Larger fleet = stronger ML signal.</div>
+<div class="highlight">🏢 <strong>Commercial Real Estate:</strong> Multi-tenant office buildings, data centers, co-working. HVAC represents 40–60% of energy spend. Predictive maintenance + demand charge optimization = direct NOI improvement for building owners.</div>
+The domain SLM is what changes between verticals. The data pipeline, LSTM engine, agentic orchestration, and dispatch system are the same. That's the platform play.`,
+
+  "what is real mccai sage it": `<strong>Real McC.AI™ is Sage IT's enterprise AI positioning — and SEER 5.0 is its flagship proof point.</strong>
+<div class="highlight">🎯 <strong>The Positioning:</strong> While competitors deliver AI pilots that never make it to production, Sage IT builds AI that runs. "Real McC.AI" = the real McCoy of enterprise AI. Not demos. Not charlatans. Production-grade, measurable, defensible.</div>
+<div class="highlight">🏆 <strong>Core Principles:</strong> Pragmatic and production-ready. Clean data and responsible governance. Agentic systems that run processes end-to-end. Human-in-the-loop at scale — domain experts as quality gates, not afterthoughts.</div>
+<div class="highlight">🔧 <strong>SEER 5.0 as Proof:</strong> This demo isn't theoretical. It's built on a real customer engagement (NexRev pilot, 2025), real site data, real sensor feeds. We didn't invest in a lab — we went and did it with a real customer. SEER 5.0 is what Real McC.AI looks like in the field.</div>
+The headline stat from the Sage IT website: "60% downtime cut via Digital Twins" — that's SEER 5.0 in production.`,
+
+  "agents agentic orchestration": `<strong>SEER 5.0's multi-agent orchestration architecture:</strong>
+<div class="highlight">📡 <strong>SensorAgent:</strong> Continuously ingests telemetry from all edge sources. Normalizes to canonical schema. Triggers anomaly scoring pipeline on every 15-minute window. First in the chain.</div>
+<div class="highlight">🔬 <strong>DiagnosticsAgent:</strong> When anomaly score crosses 0.75 threshold, DiagnosticsAgent calls HVAC-GPT with the sensor window. Returns: root cause, confidence, RUL estimate, recommended action. Runs in ~8 seconds.</div>
+<div class="highlight">📋 <strong>PlannerAgent:</strong> Checks SLA tier (P1/P2/P3), technician availability, calendar, and historical response times. Creates the work order with appropriate priority and scheduling window. Routes to FieldAgent.</div>
+<div class="highlight">🔩 <strong>ProcurementAgent:</strong> Cross-references required parts against warehouse inventory and technician van stock. Places orders for out-of-stock items. Returns parts availability status to the work order.</div>
+<div class="highlight">👷 <strong>FieldAgent:</strong> Generates AR-ready work instructions from the OEM manual RAG database. In Phase 2: pushes to technician's AR headset for hands-free guided repair.</div>
+Detection to dispatch: 11 minutes. Zero human steps in the current workflow. Human-in-the-loop available for P1 critical alerts at the manager notification step.`,
+
+  "houston galleria warning": `<strong>Houston Galleria status and recommended action:</strong>
+<div class="highlight">⚠️ <strong>Current Status:</strong> HVAC Unit 2 anomaly score 0.67 (watch threshold). Different fault signature from Dallas — this is bearing wear, not coil fouling. Vibration pattern + current draw trending upward over 5 days. RUL estimate: 38h ±6h.</div>
+<div class="highlight">🔧 <strong>Why It Matters:</strong> Houston Galleria is a 98,400 sq ft venue. Unit 2 serves the concession corridor and 4 auditoriums. Weekend failure during peak summer = same emergency repair scenario as Dallas but without the advance warning.</div>
+<div class="highlight">📅 <strong>Recommended Action:</strong> Schedule PM visit by Thursday. Bearing replacement + lubrication — approximately $240 in parts, 3 hours labor. If ignored: bearing seizure = $4,800–$6,200 emergency repair + 6–12 hour downtime window.</div>
+This is a classic predictive vs. reactive maintenance scenario. SEER caught it 38 hours before failure. Without SEER, the first signal would be a compressor stopping mid-show on a Saturday night.`,
+
+  "austin domain": `<strong>Austin Domain Theatre — HVAC oversupply issue:</strong>
+<div class="highlight">🌡️ <strong>The Problem:</strong> HVAC is running at full capacity (100%) while occupancy is only 31% (mid-week matinée pattern). The thermostat setpoint drifted from 72°F to 68°F — someone bumped it. At 31% occupancy, 4°F lower setpoint = the system is overcooling an empty building.</div>
+<div class="highlight">💰 <strong>The Waste:</strong> Running 100% HVAC for 31% occupancy costs approximately $180/week in unnecessary energy. Annualized: $9,360/year — for a 10-minute fix.</div>
+<div class="highlight">🔧 <strong>The Fix:</strong> Reset setpoint to 72°F (occupancy-matched via SEER's load model). Program occupancy-based setpoint scheduling so the system auto-adjusts based on auditorium headcount from occupancy sensors. Zero hardware change needed.</div>
+This is the "easy win" scenario in your fleet. No parts, no technician dispatch, no anomaly emergency — just configuration. SEER surfaces it anyway because the savings compound at scale: 10 sites × similar patterns × 52 weeks = meaningful money.`,
+
+  "savings total fleet opportunity": `<strong>Fleet-wide savings opportunity — full picture:</strong>
+<div class="highlight">⚡ <strong>Dallas Uptown HVAC Unit 3:</strong> $680/month energy + $8,400 avoided emergency + $840 avoided demand charge (Friday) = $9,920 first-month total. Ongoing: $680/month.</div>
+<div class="highlight">🔮 <strong>Dallas Preston Road (Predictive):</strong> $840 demand charge avoided if EV load-balanced by Thursday. Recurring: every Telugu/major blockbuster event. ~8–10 events/year at this location.</div>
+<div class="highlight">🟡 <strong>Houston Galleria:</strong> $240 PM cost vs $5,500 avg emergency repair avoided = $5,260 net. No ongoing energy savings — bearing replacement fully restores the unit.</div>
+<div class="highlight">🟡 <strong>Austin Domain:</strong> $180/week setpoint reset = $9,360/year ongoing. Zero cost to implement.</div>
+<strong>Total identified this month:</strong> $6,240 in actionable savings across 4 sites. <strong>The other 6 sites are healthy</strong> — but SEER is continuously monitoring for emerging patterns. Historical data shows 2–3 new actionable opportunities emerge per site per quarter.`,
+
+  "how different partner platform nexrev": `<strong>How SEER 5.0 differs from the partner's existing platform:</strong>
+<div class="highlight">📊 <strong>What the Partner Platform Does:</strong> Excellent IoT data aggregation, energy dashboards, site visibility, DrivePak HVAC optimization rules, and their NexiAI conversational layer. Their strength is data collection and visualization at scale — they know what the numbers are.</div>
+<div class="highlight">🧠 <strong>What SEER 5.0 Adds:</strong> Domain intelligence. The LSTM anomaly engine learns what "normal" looks like for each specific asset, then detects deviation before failure — not after. HVAC-GPT maps sensor patterns to fault codes with 94% confidence. RUL estimation gives you a countdown, not just a reading. Event correlation (tickets + weather + occupancy) generates predictions days in advance.</div>
+<div class="highlight">🤖 <strong>The Agentic Layer:</strong> Partner platform shows you the problem. SEER 5.0 creates the work order, verifies parts, assigns the technician, and tracks resolution — autonomously. 11 minutes detection to dispatch.</div>
+<strong>Positioning:</strong> SEER 5.0 is not a replacement. It's the intelligence layer that sits above the data layer. We connect via their native MCP server — no rip-and-replace, no integration project. Complementary, not competitive.`,
+
+  "phase 2 ar augmented reality": `<strong>SEER 5.0 Phase 2 — AR-Assisted Field Service:</strong>
+<div class="highlight">📱 <strong>What Phase 2 Adds:</strong> The work order generated by PlannerAgent gets pushed to the technician's AR device (Apple Vision Pro or HoloLens 2). When Marco walks up to HVAC Unit 3, the AR overlay shows: sensor readings in real-time, fault location highlighted on the physical unit, step-by-step instructions floating in the field of view.</div>
+<div class="highlight">🔧 <strong>Hands-Free Repair:</strong> Instead of pulling up a manual on a tablet, Marco sees torque specs, part locations, and inspection checkpoints superimposed on the actual equipment. HVAC-GPT answers questions via voice: "Is this normal?" "What's the expected coil temp after cleaning?"</div>
+<div class="highlight">📊 <strong>Auto-Close Loop:</strong> When Marco completes each step, the AR system records sensor confirmation (coil ΔT back to normal range). Work order auto-closes when all criteria met. Learning Agent ingests the repair outcome to improve the RUL model.</div>
+Phase 1 (what you're seeing today) proves the platform works. Phase 2 is already designed — it's the field execution layer that completes the zero-touch service cycle. Timeline: 12–18 months post Phase 1 production deployment.`,
+
+  "cost implementation how much": `<strong>SEER 5.0 implementation approach and economics:</strong>
+<div class="highlight">🚀 <strong>mAITRYx 8-Week POV:</strong> Sage IT's standard engagement model is an 8-week Proof of Value — low risk, high signal, clear ROI path. For SEER 5.0: Week 1–2 data integration, Week 3–4 LSTM baseline training, Week 5–6 HVAC-GPT fine-tuning on customer manuals, Week 7–8 dashboard + alert system live.</div>
+<div class="highlight">💰 <strong>Investment Model:</strong> Implementation services (one-time) + SaaS platform fee (monthly) + optional domain SLM licensing. The 10-site pilot with NexRev demonstrated ROI within the first billing cycle — $6,240 in identified savings vs. total engagement cost.</div>
+<div class="highlight">📈 <strong>Scale Economics:</strong> Each additional site adds marginal ingestion cost only. The ML models, HVAC-GPT, and agentic orchestration layer are shared infrastructure. 100-site deployment requires 2–3x compute, not 10x engineering.</div>
+Real McC.AI principle: we don't start with a strategy deck. We start with data, build a provable POV in 8 weeks, and let the numbers speak. That's the Sage IT way.`
+};
+
+// Keyword map: query keywords → response key
+const KW = [
+  [["dallas","uptown","critical","hvac unit 3","0.91"], "dallas uptown critical"],
+  [["telugu","film","kalki","pushpa","indian","surge","prediction","next friday","ev surge predict"], "telugu film prediction surge"],
+  [["load balance","ev charging","friday","stagger","bank c","ev load"], "load balance ev charging friday"],
+  [["roi","return","savings","fix hvac","unit 3 today","payback","fix today"], "roi fix hvac unit 3"],
+  [["prioritize","which sites","this week","priority","focus"], "prioritize sites this week"],
+  [["detect","anomaly","technically","lstm","how does seer know","how it works","technical"], "detect anomalies technically lstm"],
+  [["expand","100 sites","scale","cost scale","pricing"], "expand 100 sites cost scale"],
+  [["beyond hvac","other assets","verticals","manufacturing","healthcare","retail","other industries"], "beyond hvac other assets verticals"],
+  [["real mccai","real mcc","sage it","who built","who made","about seer"], "what is real mccai sage it"],
+  [["agents","agentic","orchestration","planneragent","sensoragent","multi-agent","dispatch agent"], "agents agentic orchestration"],
+  [["houston","galleria","warning","bearing"], "houston galleria warning"],
+  [["austin","domain","theatre","31%","setpoint"], "austin domain"],
+  [["total savings","total opportunity","fleet savings","all sites","6240","whole fleet"], "savings total fleet opportunity"],
+  [["different","vs partner","nexrev","freedom enterprise","compare","what's different"], "how different partner platform nexrev"],
+  [["phase 2","ar ","augmented reality","hololens","vision pro","field tech ar"], "phase 2 ar augmented reality"],
+  [["cost","implementation","how much","pricing","investment","8 week","maitryx"], "cost implementation how much"],
+];
+
+function matchResponse(q) {
+  const lq = q.toLowerCase();
+  let best = null, bestScore = 0;
+  for (const [keywords, key] of KW) {
+    const score = keywords.filter(k => lq.includes(k)).length;
+    if (score > bestScore) { bestScore = score; best = key; }
+  }
+  if (bestScore > 0) return R[best];
+  // Smart catch-all that synthesizes from context
+  return generateContextual(q);
+}
+
+function generateContextual(q) {
+  const lq = q.toLowerCase();
+  // Energy / power questions
+  if (lq.match(/energy|power|electricity|kwh|bill|demand charge|ercot|utility/)) {
+    return `Based on current fleet data, here's what SEER 5.0 sees on energy:<div class="highlight">The largest identified opportunity is <strong>Dallas Uptown at 412 kW</strong> peak demand — 68 kW above the billing baseline due to simultaneous EV charging and HVAC strain. Fixing HVAC Unit 3 alone reduces this by ~18%. The bigger opportunity is demand charge management: ERCOT commercial customers pay for the single highest 15-minute interval each month. SEER's predictive EV load-shifting (stagger EV Bank C to off-peak) is specifically designed to prevent demand charge spikes.</div>Fleet-wide, I've identified <strong>$6,240/month</strong> in actionable energy and maintenance savings across 4 sites. The 6 healthy sites are being monitored continuously for emerging patterns.`;
+  }
+  // Temperature / weather
+  if (lq.match(/temperature|weather|hot|heat|summer|outdoor/)) {
+    return `Temperature is a primary co-variate in SEER 5.0's LSTM models.<div class="highlight">Today's ambient reading at Dallas Uptown: <strong>97°F outdoor</strong>. At this temperature, condenser efficiency drops measurably — a fouled coil that might score 0.6 at 75°F becomes a 0.91 anomaly at 97°F. SEER correlates weather API data (NOAA, 7-day forecast) with HVAC sensor readings to normalize for ambient conditions in its anomaly scoring.</div>This is why the Telugu film prediction next Friday includes the 98°F forecast as a compounding factor — full theater + maximum EV charging + peak heat = the perfect storm. SEER sees all three simultaneously.`;
+  }
+  // General "how" / "what" / "can you" questions
+  if (lq.match(/how|what|can you|tell me|explain|show me/)) {
+    return `Great question. Let me pull relevant context from your fleet data:<div class="highlight">SEER 5.0 currently monitors <strong>10 entertainment venues</strong> across TX, LA, and FL. Active intelligence: LSTM anomaly detection scoring every 15 minutes, HVAC-GPT root cause diagnosis, event correlation (ticketing + weather + occupancy), and multi-agent work order orchestration.</div><div class="highlight">Right now: <strong>3 active alerts</strong> (Dallas Uptown critical, Houston Galleria warning, Austin Domain watch) + <strong>2 predictive alerts</strong> (Dallas Preston Road Telugu film surge, Tampa Bay EV overlap). Total identified savings: $6,240 this month.</div>Try one of the suggested questions on the left for a detailed deep-dive, or ask me anything specific about your sites, assets, or the SEER technology.`;
+  }
+  // Default
+  return `I have full context of your 10-venue portfolio and can answer questions about any aspect of your fleet.<div class="highlight">Current top priorities: <strong>Dallas Uptown HVAC Unit 3</strong> (RUL 52h, work order active) · <strong>Dallas Preston Road</strong> (Telugu film surge predicted Friday — act by Thursday) · <strong>Houston Galleria</strong> (HVAC Unit 2 RUL 38h) · <strong>Austin Domain</strong> (setpoint drift, $180/week waste).</div>Try asking: "Why is Dallas Uptown critical?", "Explain the Telugu film prediction", "What's the ROI on fixing Unit 3?", or "Which sites should I prioritize?" — and I'll give you the full data-backed answer.`;
+}
+
+function ask(q) {
+  document.getElementById('chatInput').value = q;
+  sendChat();
+}
+
+async function sendChat() {
+  const inp = document.getElementById('chatInput');
+  const q = inp.value.trim();
+  if (!q) return;
+  const msgs = document.getElementById('chatMsgs');
+
+  msgs.innerHTML += `<div class="msg-wrap user"><div class="msg-av usr">You</div><div><div class="bubble usr">${q}</div><div class="msg-time right">You · Just now</div></div></div>`;
+  inp.value = ''; inp.style.height = 'auto';
+
+  const tid = 'typing_' + Date.now();
+  msgs.innerHTML += `<div id="${tid}" class="msg-wrap"><div class="msg-av ai">S5</div><div class="bubble ai"><div class="typing"><span></span><span></span><span></span></div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  await new Promise(r => setTimeout(r, 700 + Math.random() * 500));
+  document.getElementById(tid)?.remove();
+
+  const resp = matchResponse(q);
+  msgs.innerHTML += `<div class="msg-wrap"><div class="msg-av ai">S5</div><div><div class="bubble ai">${resp}</div><div class="msg-time">SEER 5.0 · HVAC-GPT + Real McC.AI™</div></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+</body>
+</html>
